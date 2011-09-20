@@ -1,0 +1,315 @@
+﻿<#@ template language="C#" hostspecific="True" debug="True" #>
+<#@ output extension="cs" encoding="utf-8"  #>
+
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Xml.XPath" #>
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Entities.cs" company="Logic Software">
+//   (c) Logic Software
+// </copyright>
+// <summary>
+//   Generated class for entities.
+//   !!!DO NOT CHANGE IT DIRECTLY!!!
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace EasyProjects.ClientModel.Entities
+{
+    using System;
+	using System.Diagnostics;
+	using System.Collections.Generic;
+	using System.Runtime.Serialization;
+	using System.Xml.Serialization;
+<# 
+    string entityClassesPath = Host.ResolvePath(@"..\EntityClasses.config");
+    var root = XElement.Load(entityClassesPath);
+   
+	var entities =
+        from entityClass in root.Descendants("EntityClass")
+        let entityName = entityClass.Attribute("Name").Value
+        orderby entityName
+        select new {Name = entityName, Class = entityClass};
+			    
+    foreach (var entity in entities)
+    {
+		if(entity.Class.Attribute("EnableAPI") == null || Convert.ToBoolean(entity.Class.Attribute("EnableAPI").Value) == false)
+			continue;
+#>
+    #region <#= entity.Name #> entity
+    /// <summary>
+    /// Generated class for entity <#= entity.Name #>
+    /// </summary>
+	[DataContract(Name = "<#= ((entity.Name == "Task") ? "Activity" : entity.Name) #>", Namespace = "easyprojects.net/rest/v1")]
+	[DebuggerDisplay("Entity.<#= entity.Name #>")]
+	public partial class <#= entity.Name #>
+    { 
+		public int EntityBaseID { get { return Convert.ToInt32(<#= ((entity.Class.Attribute("TableName") == null || entity.Class.Attribute("TableName").Value == "None" )? "0" : entity.Class.Attribute("PrimaryKeyField").Value) #>);} set { <#= entity.Class.Attribute("PrimaryKeyField").Value#> = value; } }
+<#  	var fields =
+			from field in entity.Class.Descendants("Field")
+			let fieldName = (field.Attribute("Alias") ?? field.Attribute("Name")).Value
+			where fieldName != entity.Name && 
+			(field.Attribute("EnableAPI") != null || Convert.ToBoolean(field.Attribute("EnableAPI")) == true)
+        	select new {Name = fieldName, Class = field} ;
+		
+		foreach (var field in fields) { 
+			
+		string privateFieldName = "_" + field.Name.ToLower()[0] + field.Name.Remove(0, 1);	
+#>		
+		#region <#= field.Name #>
+		private <#= GetPropertyTypeForField(field.Class) #> <#= privateFieldName #>; 
+
+		[DataMember(Name = "<#= field.Name #>", IsRequired = false, EmitDefaultValue = true)]			
+        public <#= GetPropertyTypeForField(field.Class) #> <#= field.Name #> 
+		{ 
+			get
+			{
+				return <#= privateFieldName #>;
+			}
+			set
+			{
+				if(<#= privateFieldName #> != value)
+				{
+					<#= privateFieldName #> = value;
+				} 
+			}
+		}
+		#endregion
+<#  } #>
+<#  	var refFields =
+			from field in entity.Class.Descendants("ReferenceField")
+			let fieldName = field.Attribute("Name").Value
+			where fieldName != entity.Name
+				&& !fields.Any(f => f.Name == fieldName)
+        	select new {Name = fieldName, Class = field} ;
+		
+		foreach (var field in refFields) { 
+		
+		string privateFieldName = "_" + field.Name.ToLower()[0] + field.Name.Remove(0, 1);				
+			
+		string refEntityName = field.Name.Remove(field.Name.Length-2, 2);	
+		string privateFieldEntityName = "_" + refEntityName.ToLower()[0] + refEntityName.Remove(0, 1);
+#>		
+		#region <#= refEntityName #>
+		private int <#= privateFieldName #>;
+		[DataMember(Name = "<#= field.Name #>")]
+        public int <#= field.Name #> 
+		{ 
+			get
+			{
+				return <#= privateFieldName #>;
+			}
+			set
+			{
+				if(<#= privateFieldName #> != value)
+				{
+					<#= privateFieldName #> = value;
+				} 
+			}
+		}
+		
+		#endregion
+<#  } #>
+
+<#  	var permFields =
+			from field in entity.Class.Descendants("PermissionField")
+			let fieldName = field.Attribute("Name").Value
+			where fieldName != entity.Name
+        	select new {Name = fieldName, Alias = field.Attribute("Alias").Value.Trim('[',']'), Class = field} ;
+		
+		if(permFields.Any())
+		{ #>
+		#region Additional Permissions Fields		
+<#			
+			foreach (var permField in permFields) 
+			{ #>		
+		[XmlIgnore]
+        public bool <#= permField.Alias #>  {get; set;}
+<#  		} #>
+		#endregion		
+<#		} #>	
+	
+<# 		if(entity.Class.Attribute("PermissionTable") != null)
+		{ #>
+		#region Permissions Fields		
+        public bool CanEdit  {get; set;}
+        public bool CanDelete  {get; set;}
+		#endregion
+<# 		} #>
+    }
+    #endregion
+    
+<#  } #>
+
+
+}
+
+
+<#+ 	
+		
+	private string GetEntityClass(XElement root, string entityName)
+	{			
+		var	alias = (from entityClassAlias in root.Descendants("EntityClassAlias")
+			where entityClassAlias.Attribute("Name").Value == entityName
+			select entityClassAlias.Attribute("EntityClassName").Value).FirstOrDefault();	
+		
+		if(!string.IsNullOrEmpty(alias))
+		{
+			return alias;
+		}
+		
+		return entityName;
+	}
+	
+	private string GetNameForDataContract(string name, int cutLength)
+	{
+		StringBuilder outputBuilder = new StringBuilder();
+		
+		int nextCharsToCopy = 0;
+		foreach(char ch in name)
+		{
+			if(Char.IsUpper(ch))
+			{
+				nextCharsToCopy = cutLength;
+			}
+			
+			if (nextCharsToCopy > 0)
+			{
+				outputBuilder.Append(ch);
+				nextCharsToCopy--;
+			}
+		}
+		
+		return outputBuilder.ToString();	
+	}
+	
+	private string GetPropertyTypeForField(XElement fieldElement)
+	{
+		var entityClass = fieldElement.Ancestors("EntityClass").First(); 
+		string primaryKeyField = (string) entityClass.Attribute("PrimaryKeyField");
+
+		string fieldName = (string) fieldElement.Attribute("Name");
+		string accessType = (string) fieldElement.Attribute("AccessType");
+		bool hasExpression = fieldElement.Attribute("Expression") != null;
+		
+		bool nullable = (accessType != "Mandatory") && fieldName != primaryKeyField;
+		
+		IEnumerable dataTypes = (IEnumerable) fieldElement.XPathEvaluate(@"./Descriptor/@DataType");
+	
+		switch ((string) dataTypes.Cast<XAttribute>().FirstOrDefault() )
+		{
+			case "Integer":
+				return nullable ? "int?" : "int";
+			case "Bool":
+				return nullable ? "bool?" : "bool";
+			case "Decimal":
+				return nullable ? "decimal?" : "decimal";
+			case "Date":
+				return nullable ? "DateTime?" : "DateTime";			
+			case "String":
+				return "string";
+			case "HtmlText":
+				return "string";
+			case "MultilineText":
+				return "string";				        
+			default:
+				return "object";
+		}		
+	}	
+	
+	private void AddRequiredAnnotations(XElement fieldElement)
+	{
+		string accessType = (string) ((IEnumerable)fieldElement.XPathEvaluate(@"./Descriptor/@AccessType")).Cast<XAttribute>().FirstOrDefault();
+	
+		switch (accessType)
+		{
+			case "Optional":
+				break;
+			case "Mandatory":
+				this.WriteLine(string.Format("[Required(ErrorMessageResourceName = \"{0}\")]", GetValidationResourceName(fieldElement, "Required")));
+				break;
+			case "ReadOnly":
+				break;
+		}	
+	}
+		
+	private void AddStringLengthAnnotations(XElement fieldElement)
+	{
+		string maxLength = (string) ((IEnumerable)fieldElement.XPathEvaluate(@"./Descriptor/@MaxLength")).Cast<XAttribute>().FirstOrDefault();
+	
+		if (!string.IsNullOrEmpty(maxLength)
+			&& GetPropertyTypeForField(fieldElement) == "string")
+		{
+			this.WriteLine(string.Format("[StringLength({0})]", maxLength));	 
+		}
+	}
+	
+	private void AddRangeAnnotations(XElement fieldElement)
+	{
+		string minValue = (string) ((IEnumerable)fieldElement.XPathEvaluate(@"./Descriptor/@MinValue")).Cast<XAttribute>().FirstOrDefault();
+		string maxValue = (string) ((IEnumerable)fieldElement.XPathEvaluate(@"./Descriptor/@MaxValue")).Cast<XAttribute>().FirstOrDefault();
+				
+		if (!string.IsNullOrEmpty(minValue) 
+			|| !string.IsNullOrEmpty(maxValue))
+		{	
+			string propType = GetPropertyTypeForField(fieldElement).TrimEnd(new[] {'?'});
+			
+			propType = propType == "decimal" ? "double" : propType;
+			
+			minValue = string.IsNullOrEmpty(minValue) ? propType + ".MinValue" : minValue;
+			maxValue = string.IsNullOrEmpty(maxValue) ? propType + ".MaxValue" : maxValue;
+			
+			this.WriteLine(string.Format("[Range({0}, {1}, ErrorMessageResourceName = \"{2}Format\")]", minValue, maxValue, GetValidationResourceName(fieldElement, "Range")));	 
+		}
+	}
+	
+	private void AddDisplayFormatAnnotations(XElement fieldElement)
+	{		
+		string formatString = (string) ((IEnumerable)fieldElement.XPathEvaluate(@"./Descriptor/@FormatString")).Cast<XAttribute>().FirstOrDefault();
+		
+		if (!string.IsNullOrEmpty(formatString))
+		{					
+			this.WriteLine(string.Format("[DisplayFormat(DataFormatString = \"{0}\")]", formatString));	 
+		}		
+	}	
+	
+	private string GetValidationResourceName(XElement field, string validatorType)
+	{		
+		return string.Format("{0}_{1}_{2}_ErrorMessage", field.Ancestors("EntityClass").First().Attribute("Name").Value, field.Attribute("Name").Value, validatorType);	 		
+	}	
+	
+	private void AddCustomEntityValidators(XElement entityElement)
+	{			
+		var entityValidators =
+			from validator in entityElement.XPathSelectElements(@"./Validators/*")
+			let validatorName = validator.Name
+        	select new {Name = validatorName, Class = validator} ;
+		
+		foreach (var validator in entityValidators) 
+		{ 
+			this.Write(string.Format("[{0}(", validator.Name));	
+			
+			bool first = true;
+			foreach (var validatorAttribute in validator.Class.Attributes())
+			{
+				if (!first)
+				{
+					this.Write(", ");
+				}	
+				
+				this.Write(string.Format("{0} = \"{1}\"", validatorAttribute.Name, validatorAttribute.Value));	
+								
+				first = false;
+			}
+			
+			this.WriteLine(")]");				
+		}
+	
+	}	
+	#>
