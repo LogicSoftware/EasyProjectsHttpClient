@@ -66,7 +66,7 @@ namespace EasyProjects.Client.Test
         {
             EPHttpClient client = new EPHttpClient(Global.BaseAddress);
 
-            client.Authorize(Global.Username, Global.Password);
+            client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
 
             var projects = client.Query<Project>("projects").Take(1).ToList();
 
@@ -78,7 +78,7 @@ namespace EasyProjects.Client.Test
         {
             EPHttpClient client = new EPHttpClient(Global.BaseAddress);
 
-            client.Authorize(Global.Username, Global.Password);
+            client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
 
             var projects = client.Query<Task>("projects").Take(1).ToList();
 

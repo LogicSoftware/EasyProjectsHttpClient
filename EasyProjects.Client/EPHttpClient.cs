@@ -6,6 +6,9 @@ using System.Net.Http;
 
 using System.Net;
 using EasyProjects.ClientModel.Entities;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 namespace EasyProjects.Client
 {
@@ -14,6 +17,14 @@ namespace EasyProjects.Client
     /// </summary>
     public class EPHttpClient : HttpEntityConventionClient 
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether [ignore SSL errors].
+        /// </summary>
+        /// <value><c>true</c> if [ignore SSL errors]; otherwise, <c>false</c>.</value>
+        public static bool IgnoreSslErrors { get; private set; }
+
+        #region .ctor
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
         /// </summary>
@@ -27,27 +38,129 @@ namespace EasyProjects.Client
         /// <summary>
         /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
         /// </summary>
-        /// <param name="baseAddress"></param>
+        /// <param name="baseAddress">The base address.</param>
+        /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
+        public EPHttpClient(Uri baseAddress, bool ignoreSslErrors)
+            : this(baseAddress)
+        {
+            IgnoreSslErrors = ignoreSslErrors;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
+        /// </summary>
+        /// <param name="baseAddress">The base address.</param>
+        /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        public EPHttpClient(Uri baseAddress, bool ignoreSslErrors, string userName, string password)
+            : this(baseAddress)
+        {
+            IgnoreSslErrors = ignoreSslErrors;
+            AddBaseAuthenticationHeaders(userName, password);
+        }
         public EPHttpClient(string baseAddress)
             : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
         {
             base.Http.MaxResponseContentBufferSize = int.MaxValue;
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
+        /// </summary>
+        /// <param name="baseAddress"></param>
+        public EPHttpClient(string baseAddress, bool ignoreSslErrors)
+            : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
+        {
+            base.Http.MaxResponseContentBufferSize = int.MaxValue;
+            IgnoreSslErrors = ignoreSslErrors;
+
+            if (base.Http.BaseAddress.Scheme.ToLower() == "https")
+                ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(ValidateRemoteCertificate);
+        }
 
         /// <summary>
-        /// Authorizes the specified client.
+        /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
         /// </summary>
-        /// <param name="client">The client.</param>
+        /// <param name="baseAddress">The base address.</param>
+        /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        public EPHttpClient(string baseAddress, bool ignoreSslErrors, string userName, string password)
+            : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
+        {
+            base.Http.MaxResponseContentBufferSize = int.MaxValue;
+            IgnoreSslErrors = ignoreSslErrors;
+
+            if (base.Http.BaseAddress.Scheme.ToLower() == "https")
+                ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(ValidateRemoteCertificate);
+
+            AddBaseAuthenticationHeaders(userName, password);
+        }
+        #endregion
+
+        /// <summary>
+        /// Validates the remote certificate.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="certificate">The certificate.</param>
+        /// <param name="chain">The chain.</param>
+        /// <param name="policyErrors">The policy errors.</param>
+        /// <returns></returns>
+        private static bool ValidateRemoteCertificate(
+        object sender,
+            X509Certificate certificate,
+            X509Chain chain,
+            SslPolicyErrors policyErrors
+        )
+        {
+            if (IgnoreSslErrors)
+            {
+                // allow any old dodgy certificate...
+                return true;
+            }
+            else
+            {
+                return policyErrors == SslPolicyErrors.None;
+            }
+        }
+
+        /// <summary>
+        /// Adds the base authentication headers.
+        /// </summary>
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
-        /// <returns></returns>
-        public bool Authorize(string username, string password)
+        public void AddBaseAuthenticationHeaders(string username, string password)
         {
-            var request = new AuthenticateRequest() { username = username, password = password };
-            var response = this.TryPost<AuthenticateRequest>("authentication", request, out request);
-
-            return response.IsSuccessStatusCode;
+            byte[] authbytes = Encoding.ASCII.GetBytes(string.Concat(username, ":", password));
+            string base64 = Convert.ToBase64String(authbytes);
+            Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", base64);
         }
+
+        #region Extra
+        /// <summary>
+        /// Posts as stream.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="stream">The stream.</param>
+        public void PostAsStream(string path, Stream stream)
+        {
+            var content = new StreamContent(stream);
+            base.Http.Post(path, content);
+        }
+
+        /// <summary>
+        /// Gets as stream.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
+        public Stream GetAsStream(string path)
+        {
+            var response = base.Http.Get(path);
+
+            return response.Content.ContentReadStream;
+        }
+
+        #endregion
     }
 
 

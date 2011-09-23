@@ -48,7 +48,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "<#= ((entity.Name == "Task") ? "Activity" : entity.Name) #>", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.<#= entity.Name #>")]
-	public partial class <#= entity.Name #>
+	public partial class <#= entity.Name #> <# if(ContainsCustomFields(entity.Class)){#> : ICustomFieldsContainer <#}#>
     { 
 		public int EntityBaseID { get { return Convert.ToInt32(<#= ((entity.Class.Attribute("TableName") == null || entity.Class.Attribute("TableName").Value == "None" )? "0" : entity.Class.Attribute("PrimaryKeyField").Value) #>);} set { <#= entity.Class.Attribute("PrimaryKeyField").Value#> = value; } }
 <#  	var fields =
@@ -142,6 +142,27 @@ namespace EasyProjects.ClientModel.Entities
         public bool CanDelete  {get; set;}
 		#endregion
 <# 		} #>
+<# 		if(ContainsCustomFields(entity.Class))
+		{ #>
+
+		#region Custom fields
+        private CustomFieldsCollection customFields;
+		[DataMember(Name = "CustomFields")]
+		public CustomFieldsCollection CustomFields 
+		{
+			get 
+			{
+				if (customFields == null) { customFields = new CustomFieldsCollection();}
+				return customFields;
+			}
+			set{
+				customFields = value;
+			}
+		}
+		#endregion
+<#  } #>
+
+
     }
     #endregion
     
@@ -152,7 +173,11 @@ namespace EasyProjects.ClientModel.Entities
 
 
 <#+ 	
-		
+	private bool ContainsCustomFields(XElement element)
+	{
+		return element.Attribute("DisableCustomFields") == null || !Convert.ToBoolean(element.Attribute("DisableCustomFields").Value);
+	}
+
 	private string GetEntityClass(XElement root, string entityName)
 	{			
 		var	alias = (from entityClassAlias in root.Descendants("EntityClassAlias")

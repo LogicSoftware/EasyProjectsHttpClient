@@ -42,11 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\AuthenticateRequest.cs" />
+    <Compile Include="Entities\CustomField.cs" />
     <Compile Include="Entities\Entities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ICustomFieldsContainer.cs" />
     <Compile Include="Entities\Views.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

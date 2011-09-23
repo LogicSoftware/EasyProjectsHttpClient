@@ -22,8 +22,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "CalendarEvent", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.CalendarEvent")]
-	public partial class CalendarEvent
-    { 
+	public partial class CalendarEvent     { 
 		public int EntityBaseID { get { return Convert.ToInt32(CalendarEventID);} set { CalendarEventID = value; } }
 		
 		#region CalendarEventID
@@ -188,6 +187,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -197,8 +198,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Category", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Category")]
-	public partial class Category
-    { 
+	public partial class Category     { 
 		public int EntityBaseID { get { return Convert.ToInt32(CategoryID);} set { CategoryID = value; } }
 		
 		#region CategoryID
@@ -243,6 +243,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -252,8 +254,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Customer", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Customer")]
-	public partial class Customer
-    { 
+	public partial class Customer  : ICustomFieldsContainer     { 
 		public int EntityBaseID { get { return Convert.ToInt32(CustomerID);} set { CustomerID = value; } }
 		
 		#region CustomerID
@@ -338,6 +339,24 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+		#region Custom fields
+        private CustomFieldsCollection customFields;
+		[DataMember(Name = "CustomFields")]
+		public CustomFieldsCollection CustomFields 
+		{
+			get 
+			{
+				if (customFields == null) { customFields = new CustomFieldsCollection();}
+				return customFields;
+			}
+			set{
+				customFields = value;
+			}
+		}
+		#endregion
+
+
     }
     #endregion
     
@@ -347,8 +366,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "IssueType", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.IssueType")]
-	public partial class IssueType
-    { 
+	public partial class IssueType     { 
 		public int EntityBaseID { get { return Convert.ToInt32(IssueTypeID);} set { IssueTypeID = value; } }
 		
 		#region IssueTypeID
@@ -393,6 +411,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -402,8 +422,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "MemberPermission", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.MemberPermission")]
-	public partial class MemberPermission
-    { 
+	public partial class MemberPermission     { 
 		public int EntityBaseID { get { return Convert.ToInt32(MemberPermissionID);} set { MemberPermissionID = value; } }
 		
 		#region MemberPermissionID
@@ -1028,6 +1047,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -1037,8 +1058,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Message", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Message")]
-	public partial class Message
-    { 
+	public partial class Message     { 
 		public int EntityBaseID { get { return Convert.ToInt32(MessageID);} set { MessageID = value; } }
 		
 		#region MessageID
@@ -1168,6 +1188,8 @@ namespace EasyProjects.ClientModel.Entities
 		#endregion		
 	
 	
+
+
     }
     #endregion
     
@@ -1177,8 +1199,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Portfolio", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Portfolio")]
-	public partial class Portfolio
-    { 
+	public partial class Portfolio  : ICustomFieldsContainer     { 
 		public int EntityBaseID { get { return Convert.ToInt32(PortfolioID);} set { PortfolioID = value; } }
 		
 		#region PortfolioID
@@ -1381,6 +1402,24 @@ namespace EasyProjects.ClientModel.Entities
         public bool CanEdit  {get; set;}
         public bool CanDelete  {get; set;}
 		#endregion
+
+		#region Custom fields
+        private CustomFieldsCollection customFields;
+		[DataMember(Name = "CustomFields")]
+		public CustomFieldsCollection CustomFields 
+		{
+			get 
+			{
+				if (customFields == null) { customFields = new CustomFieldsCollection();}
+				return customFields;
+			}
+			set{
+				customFields = value;
+			}
+		}
+		#endregion
+
+
     }
     #endregion
     
@@ -1390,8 +1429,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "PortfolioCategory", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.PortfolioCategory")]
-	public partial class PortfolioCategory
-    { 
+	public partial class PortfolioCategory     { 
 		public int EntityBaseID { get { return Convert.ToInt32(PortfolioCategoryID);} set { PortfolioCategoryID = value; } }
 		
 		#region PortfolioCategoryID
@@ -1436,6 +1474,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -1445,8 +1485,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "PortfolioMember", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.PortfolioMember")]
-	public partial class PortfolioMember
-    { 
+	public partial class PortfolioMember     { 
 		public int EntityBaseID { get { return Convert.ToInt32(PortfolioMemberID);} set { PortfolioMemberID = value; } }
 		
 		#region PortfolioMemberID
@@ -1531,6 +1570,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -1540,8 +1581,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "PortfolioStatus", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.PortfolioStatus")]
-	public partial class PortfolioStatus
-    { 
+	public partial class PortfolioStatus     { 
 		public int EntityBaseID { get { return Convert.ToInt32(PortfolioStatusID);} set { PortfolioStatusID = value; } }
 		
 		#region PortfolioStatusID
@@ -1626,6 +1666,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -1635,8 +1677,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Priority", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Priority")]
-	public partial class Priority
-    { 
+	public partial class Priority     { 
 		public int EntityBaseID { get { return Convert.ToInt32(PriorityID);} set { PriorityID = value; } }
 		
 		#region PriorityID
@@ -1681,6 +1722,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -1690,8 +1733,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Project", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Project")]
-	public partial class Project
-    { 
+	public partial class Project  : ICustomFieldsContainer     { 
 		public int EntityBaseID { get { return Convert.ToInt32(ProjectID);} set { ProjectID = value; } }
 		
 		#region ProjectID
@@ -2113,6 +2155,24 @@ namespace EasyProjects.ClientModel.Entities
         public bool CanEdit  {get; set;}
         public bool CanDelete  {get; set;}
 		#endregion
+
+		#region Custom fields
+        private CustomFieldsCollection customFields;
+		[DataMember(Name = "CustomFields")]
+		public CustomFieldsCollection CustomFields 
+		{
+			get 
+			{
+				if (customFields == null) { customFields = new CustomFieldsCollection();}
+				return customFields;
+			}
+			set{
+				customFields = value;
+			}
+		}
+		#endregion
+
+
     }
     #endregion
     
@@ -2122,8 +2182,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "ProjectAttachment", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.ProjectAttachment")]
-	public partial class ProjectAttachment
-    { 
+	public partial class ProjectAttachment     { 
 		public int EntityBaseID { get { return Convert.ToInt32(ProjectAttachmentID);} set { ProjectAttachmentID = value; } }
 		
 		#region ProjectAttachmentID
@@ -2328,6 +2387,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -2337,8 +2398,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "ProjectMember", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.ProjectMember")]
-	public partial class ProjectMember
-    { 
+	public partial class ProjectMember     { 
 		public int EntityBaseID { get { return Convert.ToInt32(ProjectMemberID);} set { ProjectMemberID = value; } }
 		
 		#region ProjectMemberID
@@ -2443,6 +2503,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -2452,8 +2514,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "ProjectStatus", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.ProjectStatus")]
-	public partial class ProjectStatus
-    { 
+	public partial class ProjectStatus     { 
 		public int EntityBaseID { get { return Convert.ToInt32(ProjectStatusID);} set { ProjectStatusID = value; } }
 		
 		#region ProjectStatusID
@@ -2518,6 +2579,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -2527,8 +2590,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Role", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Role")]
-	public partial class Role
-    { 
+	public partial class Role  : ICustomFieldsContainer     { 
 		public int EntityBaseID { get { return Convert.ToInt32(RoleID);} set { RoleID = value; } }
 		
 		#region RoleID
@@ -2893,6 +2955,24 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+		#region Custom fields
+        private CustomFieldsCollection customFields;
+		[DataMember(Name = "CustomFields")]
+		public CustomFieldsCollection CustomFields 
+		{
+			get 
+			{
+				if (customFields == null) { customFields = new CustomFieldsCollection();}
+				return customFields;
+			}
+			set{
+				customFields = value;
+			}
+		}
+		#endregion
+
+
     }
     #endregion
     
@@ -2902,8 +2982,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Activity", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Task")]
-	public partial class Task
-    { 
+	public partial class Task  : ICustomFieldsContainer     { 
 		public int EntityBaseID { get { return Convert.ToInt32(TaskID);} set { TaskID = value; } }
 		
 		#region TaskID
@@ -3448,6 +3527,24 @@ namespace EasyProjects.ClientModel.Entities
         public bool CanEdit  {get; set;}
         public bool CanDelete  {get; set;}
 		#endregion
+
+		#region Custom fields
+        private CustomFieldsCollection customFields;
+		[DataMember(Name = "CustomFields")]
+		public CustomFieldsCollection CustomFields 
+		{
+			get 
+			{
+				if (customFields == null) { customFields = new CustomFieldsCollection();}
+				return customFields;
+			}
+			set{
+				customFields = value;
+			}
+		}
+		#endregion
+
+
     }
     #endregion
     
@@ -3457,8 +3554,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "TaskAssignee", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.TaskAssignee")]
-	public partial class TaskAssignee
-    { 
+	public partial class TaskAssignee     { 
 		public int EntityBaseID { get { return Convert.ToInt32(TaskAssigneeID);} set { TaskAssigneeID = value; } }
 		
 		#region TaskAssigneeID
@@ -3543,6 +3639,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -3552,8 +3650,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "TaskAttachment", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.TaskAttachment")]
-	public partial class TaskAttachment
-    { 
+	public partial class TaskAttachment     { 
 		public int EntityBaseID { get { return Convert.ToInt32(TaskAttachmentID);} set { TaskAttachmentID = value; } }
 		
 		#region TaskAttachmentID
@@ -3778,6 +3875,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -3787,8 +3886,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "TaskStatus", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.TaskStatus")]
-	public partial class TaskStatus
-    { 
+	public partial class TaskStatus     { 
 		public int EntityBaseID { get { return Convert.ToInt32(TaskStatusID);} set { TaskStatusID = value; } }
 		
 		#region TaskStatusID
@@ -3953,6 +4051,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -3962,8 +4062,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Threshold", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Threshold")]
-	public partial class Threshold
-    { 
+	public partial class Threshold     { 
 		public int EntityBaseID { get { return Convert.ToInt32(ThresholdID);} set { ThresholdID = value; } }
 		
 		#region ThresholdID
@@ -4048,6 +4147,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -4057,8 +4158,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "TimeEntry", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.TimeEntry")]
-	public partial class TimeEntry
-    { 
+	public partial class TimeEntry     { 
 		public int EntityBaseID { get { return Convert.ToInt32(TimeEntryID);} set { TimeEntryID = value; } }
 		
 		#region TimeEntryID
@@ -4207,6 +4307,8 @@ namespace EasyProjects.ClientModel.Entities
         public bool CanEdit  {get; set;}
         public bool CanDelete  {get; set;}
 		#endregion
+
+
     }
     #endregion
     
@@ -4216,8 +4318,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "Timeliness", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.Timeliness")]
-	public partial class Timeliness
-    { 
+	public partial class Timeliness     { 
 		public int EntityBaseID { get { return Convert.ToInt32(TimelinessID);} set { TimelinessID = value; } }
 		
 		#region TimelinessID
@@ -4302,6 +4403,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
@@ -4311,8 +4414,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "User", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.User")]
-	public partial class User
-    { 
+	public partial class User  : ICustomFieldsContainer     { 
 		public int EntityBaseID { get { return Convert.ToInt32(UserID);} set { UserID = value; } }
 		
 		#region UserID
@@ -4457,6 +4559,24 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+		#region Custom fields
+        private CustomFieldsCollection customFields;
+		[DataMember(Name = "CustomFields")]
+		public CustomFieldsCollection CustomFields 
+		{
+			get 
+			{
+				if (customFields == null) { customFields = new CustomFieldsCollection();}
+				return customFields;
+			}
+			set{
+				customFields = value;
+			}
+		}
+		#endregion
+
+
     }
     #endregion
     
@@ -4466,8 +4586,7 @@ namespace EasyProjects.ClientModel.Entities
     /// </summary>
 	[DataContract(Name = "VacationType", Namespace = "easyprojects.net/rest/v1")]
 	[DebuggerDisplay("Entity.VacationType")]
-	public partial class VacationType
-    { 
+	public partial class VacationType     { 
 		public int EntityBaseID { get { return Convert.ToInt32(VacationTypeID);} set { VacationTypeID = value; } }
 		
 		#region VacationTypeID
@@ -4532,6 +4651,8 @@ namespace EasyProjects.ClientModel.Entities
 
 	
 	
+
+
     }
     #endregion
     
