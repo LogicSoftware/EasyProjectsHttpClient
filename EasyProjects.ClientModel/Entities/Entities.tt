@@ -129,7 +129,7 @@ namespace EasyProjects.ClientModel.Entities
 <#			
 			foreach (var permField in permFields) 
 			{ #>		
-		[XmlIgnore]
+		[DataMember(Name = "<#= permField.Alias #>")]
         public bool <#= permField.Alias #>  {get; set;}
 <#  		} #>
 		#endregion		

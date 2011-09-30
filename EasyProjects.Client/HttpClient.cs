@@ -15,7 +15,7 @@ namespace EasyProjects.Client
     /// <summary>
     /// EP HttpClient
     /// </summary>
-    public class EPHttpClient : HttpEntityConventionClient 
+    public class HttpClient : HttpEntityConventionClient 
     {
         /// <summary>
         /// Gets or sets a value indicating whether [ignore SSL errors].
@@ -24,51 +24,51 @@ namespace EasyProjects.Client
         public static bool IgnoreSslErrors { get; private set; }
 
         #region .ctor
-        
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
+        /// Initializes a new instance of the <see cref="HttpClient"/> class.
         /// </summary>
         /// <param name="baseAddress">The base address.</param>
-        public EPHttpClient(Uri baseAddress)
+        public HttpClient(Uri baseAddress)
             : base(baseAddress, new JsonNetEntityFormatter(), new EPResourceNameConvention())
         {
             base.Http.MaxResponseContentBufferSize = int.MaxValue;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
+        /// Initializes a new instance of the <see cref="HttpClient"/> class.
         /// </summary>
         /// <param name="baseAddress">The base address.</param>
         /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
-        public EPHttpClient(Uri baseAddress, bool ignoreSslErrors)
+        public HttpClient(Uri baseAddress, bool ignoreSslErrors)
             : this(baseAddress)
         {
             IgnoreSslErrors = ignoreSslErrors;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
+        /// Initializes a new instance of the <see cref="HttpClient"/> class.
         /// </summary>
         /// <param name="baseAddress">The base address.</param>
         /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
-        public EPHttpClient(Uri baseAddress, bool ignoreSslErrors, string userName, string password)
+        public HttpClient(Uri baseAddress, bool ignoreSslErrors, string userName, string password)
             : this(baseAddress)
         {
             IgnoreSslErrors = ignoreSslErrors;
             AddBaseAuthenticationHeaders(userName, password);
         }
-        public EPHttpClient(string baseAddress)
+        public HttpClient(string baseAddress)
             : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
         {
             base.Http.MaxResponseContentBufferSize = int.MaxValue;
         }
         /// <summary>
-        /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
+        /// Initializes a new instance of the <see cref="HttpClient"/> class.
         /// </summary>
         /// <param name="baseAddress"></param>
-        public EPHttpClient(string baseAddress, bool ignoreSslErrors)
+        public HttpClient(string baseAddress, bool ignoreSslErrors)
             : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
         {
             base.Http.MaxResponseContentBufferSize = int.MaxValue;
@@ -79,13 +79,13 @@ namespace EasyProjects.Client
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EPHttpClient"/> class.
+        /// Initializes a new instance of the <see cref="HttpClient"/> class.
         /// </summary>
         /// <param name="baseAddress">The base address.</param>
         /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
-        public EPHttpClient(string baseAddress, bool ignoreSslErrors, string userName, string password)
+        public HttpClient(string baseAddress, bool ignoreSslErrors, string userName, string password)
             : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
         {
             base.Http.MaxResponseContentBufferSize = int.MaxValue;
@@ -136,6 +136,29 @@ namespace EasyProjects.Client
             Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", base64);
         }
 
+        /// <summary>
+        /// Queries as resource.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="resourcePath">The resource path.</param>
+        /// <param name="args">The args.</param>
+        /// <returns></returns>
+        public IHttpEntityQuery<T> QueryAsResource<T>(string resourcePath, params object[] args)
+        {
+            return ((HttpEntityClient)this).Query<T>(String.Format(resourcePath, args));
+        }
+
+        /// <summary>
+        /// Queries as resource.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="resourcePath">The resource path.</param>
+        /// <returns></returns>
+        public IHttpEntityQuery<T> QueryAsResource<T>(string resourcePath)
+        {
+            return ((HttpEntityClient)this).Query<T>(resourcePath);
+        }
+
         #region Extra
         /// <summary>
         /// Posts as stream.
@@ -164,6 +187,9 @@ namespace EasyProjects.Client
     }
 
 
+    /// <summary>
+    /// EP ResourceNameConvention
+    /// </summary>
     public class EPResourceNameConvention: IEntityResourceNameConvention
     {
         /// <summary>

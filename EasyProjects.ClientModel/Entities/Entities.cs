@@ -1183,7 +1183,7 @@ namespace EasyProjects.ClientModel.Entities
 
 		#region Additional Permissions Fields		
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditEntity")]
         public bool CanEditEntity  {get; set;}
 		#endregion		
 	
@@ -1384,16 +1384,16 @@ namespace EasyProjects.ClientModel.Entities
 
 		#region Additional Permissions Fields		
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanViewPortfolioObjects")]
         public bool CanViewPortfolioObjects  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditPortfolioObjects")]
         public bool CanEditPortfolioObjects  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "IsPortfolioManager")]
         public bool IsPortfolioManager  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "IsPortfolioMember")]
         public bool IsPortfolioMember  {get; set;}
 		#endregion		
 	
@@ -2098,55 +2098,55 @@ namespace EasyProjects.ClientModel.Entities
 
 		#region Additional Permissions Fields		
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanCreateTasks")]
         public bool CanCreateTasks  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanCreateIssues")]
         public bool CanCreateIssues  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanCreateRequests")]
         public bool CanCreateRequests  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "IsProjectMember")]
         public bool IsProjectMember  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManage")]
         public bool CanManage  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanViewMembersAndAssignees")]
         public bool CanViewMembersAndAssignees  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManageProjectMembers")]
         public bool CanManageProjectMembers  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManageAssigneesTasks")]
         public bool CanManageAssigneesTasks  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManageAssigneesIssues")]
         public bool CanManageAssigneesIssues  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManageAssigneesRequests")]
         public bool CanManageAssigneesRequests  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAllTasks")]
         public bool CanEditAllTasks  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAllIssues")]
         public bool CanEditAllIssues  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAllRequests")]
         public bool CanEditAllRequests  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAssignedTasks")]
         public bool CanEditAssignedTasks  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAssignedIssues")]
         public bool CanEditAssignedIssues  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAssignedRequests")]
         public bool CanEditAssignedRequests  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "IsPortfolioManager")]
         public bool IsPortfolioManager  {get; set;}
 		#endregion		
 	
@@ -3467,58 +3467,58 @@ namespace EasyProjects.ClientModel.Entities
 
 		#region Additional Permissions Fields		
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanCreateTasks")]
         public bool CanCreateTasks  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanCreateIssues")]
         public bool CanCreateIssues  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanCreateRequests")]
         public bool CanCreateRequests  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "IsProjectMember")]
         public bool IsProjectMember  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManage")]
         public bool CanManage  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanCreateTimeEntries")]
         public bool CanCreateTimeEntries  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanCreateTimeEntriesForOther")]
         public bool CanCreateTimeEntriesForOther  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManageAssigneesTasks")]
         public bool CanManageAssigneesTasks  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManageAssigneesIssues")]
         public bool CanManageAssigneesIssues  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanManageAssigneesRequests")]
         public bool CanManageAssigneesRequests  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanViewMembersAndAssignees")]
         public bool CanViewMembersAndAssignees  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAllTasks")]
         public bool CanEditAllTasks  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAllIssues")]
         public bool CanEditAllIssues  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAllRequests")]
         public bool CanEditAllRequests  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAssignedTasks")]
         public bool CanEditAssignedTasks  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAssignedIssues")]
         public bool CanEditAssignedIssues  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "CanEditAssignedRequests")]
         public bool CanEditAssignedRequests  {get; set;}
 		
-		[XmlIgnore]
+		[DataMember(Name = "IsPortfolioManager")]
         public bool IsPortfolioManager  {get; set;}
 		#endregion		
 	

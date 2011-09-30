@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EPHttpClient.cs" />
+    <Compile Include="HttpClient.cs" />
     <Compile Include="netfx\System\Guard.cs" />
     <Compile Include="netfx\System\Net\Http\EntityClient\HttpEntityClient.cs" />
     <Compile Include="netfx\System\Net\Http\EntityClient\HttpEntityException.cs" />

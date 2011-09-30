@@ -63,17 +63,16 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void GetProjects()
         {
-            EPHttpClient client = new EPHttpClient(Global.BaseAddress, true);
-
-            client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
-            
-            var projects = client.Query<Project>("projects").ToList();
+            using (var client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
+            { 
+                var projects = client.Query<Project>().Where(p => p.ProjectID == 1 && p.Progress < 20).ToList();
+            }
         }
 
         [TestMethod]
         public void GetActivities()
         {
-            EPHttpClient client = new EPHttpClient(Global.BaseAddress);
+            HttpClient client = new HttpClient(Global.BaseAddress);
 
             client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
 
@@ -83,7 +82,7 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void GetPortfolios()
         {
-            EPHttpClient client = new EPHttpClient(Global.BaseAddress);
+            HttpClient client = new HttpClient(Global.BaseAddress);
 
             client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
 
@@ -93,7 +92,7 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void GetUsers()
         {
-            EPHttpClient client = new EPHttpClient(Global.BaseAddress);
+            HttpClient client = new HttpClient(Global.BaseAddress);
 
             client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
 

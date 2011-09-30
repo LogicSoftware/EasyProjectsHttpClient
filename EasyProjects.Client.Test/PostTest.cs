@@ -64,7 +64,7 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void PostProject()
         {
-            EPHttpClient client = new EPHttpClient(Global.BaseAddress);
+            HttpClient client = new HttpClient(Global.BaseAddress);
 
             client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
 
@@ -85,7 +85,7 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void PostActivities()
         {
-            EPHttpClient client = new EPHttpClient(Global.BaseAddress);
+            HttpClient client = new HttpClient(Global.BaseAddress);
 
             client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
 
