@@ -60,26 +60,6 @@ namespace System.Net.Http
 	public class HttpEntityConventionClient : HttpEntityClient
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="HttpEntityConventionClient"/> class with 
-		/// the default formatter <see cref="JsonNetEntityFormatter"/> and convention 
-		/// <see cref="PluralizerResourceConvention"/>.
-		/// </summary>
-		public HttpEntityConventionClient(string baseAddress)
-			: this(new Uri(baseAddress))
-		{
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="HttpEntityConventionClient"/> class with 
-		/// the default formatter <see cref="JsonNetEntityFormatter"/> and convention 
-		/// <see cref="PluralizerResourceConvention"/>.
-		/// </summary>
-		public HttpEntityConventionClient(Uri baseAddress)
-			: this(baseAddress, new JsonNetEntityFormatter(), new PluralizerResourceConvention())
-		{
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="HttpEntityConventionClient"/> class.
 		/// </summary>
 		/// <param name="baseAddress">The base address of the service.</param>

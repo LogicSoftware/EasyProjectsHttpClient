@@ -47,7 +47,7 @@ namespace System.Net.Http
 
 		public override string ToString()
 		{
-			var http = HttpUtility.ParseQueryString("");
+            var http = new NameValueCollection();
 			http.Add(this);
 			return http.ToString();
 		}
