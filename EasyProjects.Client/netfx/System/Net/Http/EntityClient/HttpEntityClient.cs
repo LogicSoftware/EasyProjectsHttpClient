@@ -457,7 +457,9 @@ namespace System.Net.Http
 				if (this.query.Options != null)
 				{
 					var builder = new UriBuilder(uri);
-                    builder.Query = (string.IsNullOrEmpty(builder.Query) ? "?" : "&") + this.query.Options;
+                    builder.Query = (string.IsNullOrEmpty(builder.Query) ? "" : (builder.Query.TrimStart('?') + "&")) + 
+                        String.Join("&",
+                        this.query.Options.AllKeys.Select(k => k + "=" + this.query.Options[k]).ToArray());
 
 					uri = builder.Uri;
 				}
