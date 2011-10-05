@@ -25,7 +25,7 @@ using System.Web;
 
 namespace System.Net.Http
 {
-	public partial class HttpNameValueCollection : NameValueCollection
+	public class HttpNameValueCollection : NameValueCollection
 	{
 		public HttpNameValueCollection()
 			: base(StringComparer.OrdinalIgnoreCase)
@@ -45,11 +45,26 @@ namespace System.Net.Http
 			return this;
 		}
 
+        public static HttpNameValueCollection Parse(string query)
+        {
+            var tokens = query
+                .Split(new char [] { '&' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(Uri.UnescapeDataString);
+            HttpNameValueCollection result = new HttpNameValueCollection();
+            
+            tokens
+                .Select(t => t.Split(new char [] { '=' }, StringSplitOptions.RemoveEmptyEntries))
+                .Select(pair => new { Key = pair[0], Value = (pair.Length > 1) ? pair[1] : "" })
+                .ToList()
+                .ForEach(pair => result.Add(pair.Key, pair.Value));
+
+            return result;
+        }
+
 		public override string ToString()
 		{
-            var http = new NameValueCollection();
-			http.Add(this);
-			return http.ToString();
+            return  String.Join("&",
+                    this.AllKeys.Select(k =>  Uri.EscapeUriString(k + "=" + this[k])).ToArray());
 		}
 	}
 }

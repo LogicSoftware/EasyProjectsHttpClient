@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeleteTest.cs" />
+    <Compile Include="HttpNameValueCollectionTest.cs" />
     <Compile Include="PostTest.cs" />
     <Compile Include="PutTest.cs" />
     <Compile Include="GetTakeTest.cs" />
