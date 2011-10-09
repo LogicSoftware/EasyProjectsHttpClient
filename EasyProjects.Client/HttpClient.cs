@@ -17,12 +17,6 @@ namespace EasyProjects.Client
     /// </summary>
     public class HttpClient : HttpEntityConventionClient 
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether [ignore SSL errors].
-        /// </summary>
-        /// <value><c>true</c> if [ignore SSL errors]; otherwise, <c>false</c>.</value>
-        public static bool IgnoreSslErrors { get; private set; }
-
         #region .ctor
 
         /// <summary>
@@ -35,94 +29,20 @@ namespace EasyProjects.Client
             base.Http.MaxResponseContentBufferSize = int.MaxValue;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HttpClient"/> class.
-        /// </summary>
-        /// <param name="baseAddress">The base address.</param>
-        /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
-        public HttpClient(Uri baseAddress, bool ignoreSslErrors)
-            : this(baseAddress)
-        {
-            IgnoreSslErrors = ignoreSslErrors;
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpClient"/> class.
         /// </summary>
         /// <param name="baseAddress">The base address.</param>
-        /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
-        public HttpClient(Uri baseAddress, bool ignoreSslErrors, string userName, string password)
+        public HttpClient(Uri baseAddress, string userName, string password)
             : this(baseAddress)
         {
-            IgnoreSslErrors = ignoreSslErrors;
             AddBaseAuthenticationHeaders(userName, password);
         }
-        public HttpClient(string baseAddress)
-            : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
-        {
-            base.Http.MaxResponseContentBufferSize = int.MaxValue;
-        }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HttpClient"/> class.
-        /// </summary>
-        /// <param name="baseAddress"></param>
-        public HttpClient(string baseAddress, bool ignoreSslErrors)
-            : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
-        {
-            base.Http.MaxResponseContentBufferSize = int.MaxValue;
-            IgnoreSslErrors = ignoreSslErrors;
 
-            if (base.Http.BaseAddress.Scheme.ToLower() == "https")
-                ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(ValidateRemoteCertificate);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HttpClient"/> class.
-        /// </summary>
-        /// <param name="baseAddress">The base address.</param>
-        /// <param name="ignoreSslErrors">if set to <c>true</c> [ignore SSL errors].</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="password">The password.</param>
-        public HttpClient(string baseAddress, bool ignoreSslErrors, string userName, string password)
-            : base(new Uri(baseAddress), new JsonNetEntityFormatter(), new EPResourceNameConvention())
-        {
-            base.Http.MaxResponseContentBufferSize = int.MaxValue;
-            IgnoreSslErrors = ignoreSslErrors;
-
-            if (base.Http.BaseAddress.Scheme.ToLower() == "https")
-                ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(ValidateRemoteCertificate);
-
-            AddBaseAuthenticationHeaders(userName, password);
-        }
         #endregion
-
-        /// <summary>
-        /// Validates the remote certificate.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="certificate">The certificate.</param>
-        /// <param name="chain">The chain.</param>
-        /// <param name="policyErrors">The policy errors.</param>
-        /// <returns></returns>
-        private static bool ValidateRemoteCertificate(
-        object sender,
-            X509Certificate certificate,
-            X509Chain chain,
-            SslPolicyErrors policyErrors
-        )
-        {
-            if (IgnoreSslErrors)
-            {
-                // allow any old dodgy certificate...
-                return true;
-            }
-            else
-            {
-                return policyErrors == SslPolicyErrors.None;
-            }
-        }
 
         /// <summary>
         /// Adds the base authentication headers.
