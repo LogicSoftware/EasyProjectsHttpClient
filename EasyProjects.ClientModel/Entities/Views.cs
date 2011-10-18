@@ -15,16 +15,16 @@ namespace EasyProjects.ClientModel.Entities
 	using System.Diagnostics;
 	using System.Runtime.Serialization;
 	
-    #region PortfolioList view
+    #region APIPortfolioList view
     /// <summary>
-    /// Generated class for view PortfolioList
+    /// Generated class for view APIPortfolioList
     /// </summary>
 	
 	[DebuggerDisplay("View.{ViewName}")]
-	[DataContract(Name = "PortfolioList", Namespace = "easyprojects.net/rest/v1")]
-	public partial class PortfolioList 
+	[DataContract(Name = "APIPortfolioList", Namespace = "easyprojects.net/rest/v1")]
+	public partial class APIPortfolioList 
     { 
-	    public const string ViewNameString = "PortfolioList";
+	    public const string ViewNameString = "APIPortfolioList";
         public string ViewName { get { return ViewNameString; } }
 	
 	
@@ -68,16 +68,16 @@ namespace EasyProjects.ClientModel.Entities
     }
     #endregion
     
-    #region ProjectList view
+    #region APIProjectList view
     /// <summary>
-    /// Generated class for view ProjectList
+    /// Generated class for view APIProjectList
     /// </summary>
 	
 	[DebuggerDisplay("View.{ViewName}")]
-	[DataContract(Name = "ProjectList", Namespace = "easyprojects.net/rest/v1")]
-	public partial class ProjectList 
+	[DataContract(Name = "APIProjectList", Namespace = "easyprojects.net/rest/v1")]
+	public partial class APIProjectList 
     { 
-	    public const string ViewNameString = "ProjectList";
+	    public const string ViewNameString = "APIProjectList";
         public string ViewName { get { return ViewNameString; } }
 	
 	
@@ -175,16 +175,16 @@ namespace EasyProjects.ClientModel.Entities
     }
     #endregion
     
-    #region ProjectNamesList view
+    #region APIProjectNamesList view
     /// <summary>
-    /// Generated class for view ProjectNamesList
+    /// Generated class for view APIProjectNamesList
     /// </summary>
 	
 	[DebuggerDisplay("View.{ViewName}")]
-	[DataContract(Name = "ProjectNamesList", Namespace = "easyprojects.net/rest/v1")]
-	public partial class ProjectNamesList 
+	[DataContract(Name = "APIProjectNamesList", Namespace = "easyprojects.net/rest/v1")]
+	public partial class APIProjectNamesList 
     { 
-	    public const string ViewNameString = "ProjectNamesList";
+	    public const string ViewNameString = "APIProjectNamesList";
         public string ViewName { get { return ViewNameString; } }
 	
 	
@@ -203,16 +203,16 @@ namespace EasyProjects.ClientModel.Entities
     }
     #endregion
     
-    #region TaskListPlain view
+    #region APITaskList view
     /// <summary>
-    /// Generated class for view TaskListPlain
+    /// Generated class for view APITaskList
     /// </summary>
 	
 	[DebuggerDisplay("View.{ViewName}")]
-	[DataContract(Name = "TaskListPlain", Namespace = "easyprojects.net/rest/v1")]
-	public partial class TaskListPlain 
+	[DataContract(Name = "APITaskList", Namespace = "easyprojects.net/rest/v1")]
+	public partial class APITaskList 
     { 
-	    public const string ViewNameString = "TaskListPlain";
+	    public const string ViewNameString = "APITaskList";
         public string ViewName { get { return ViewNameString; } }
 	
 	
@@ -397,6 +397,58 @@ namespace EasyProjects.ClientModel.Entities
         public bool CanDelete  {get; set;}
 		#endregion
 	
+    }
+    #endregion
+    
+    #region APITaskNamesList view
+    /// <summary>
+    /// Generated class for view APITaskNamesList
+    /// </summary>
+	
+	[DebuggerDisplay("View.{ViewName}")]
+	[DataContract(Name = "APITaskNamesList", Namespace = "easyprojects.net/rest/v1")]
+	public partial class APITaskNamesList 
+    { 
+	    public const string ViewNameString = "APITaskNamesList";
+        public string ViewName { get { return ViewNameString; } }
+	
+	
+		[DataMember(Name = "TaskID", IsRequired = false, EmitDefaultValue = true)]	
+        public int Task_TaskID {get; set;}
+	
+		[DataMember(Name = "ParentID", IsRequired = false, EmitDefaultValue = true)]	
+        public int? Task_ParentID {get; set;}
+	
+		[DataMember(Name = "Name", IsRequired = false, EmitDefaultValue = true)]	
+        public string Task_Name {get; set;}
+	
+		[DataMember(Name = "Progress", IsRequired = false, EmitDefaultValue = true)]	
+        public int Task_Progress {get; set;}
+	
+		[DataMember(Name = "EstimatedHours", IsRequired = false, EmitDefaultValue = true)]	
+        public decimal? Task_EstimatedHours {get; set;}
+	
+		[DataMember(Name = "ActualHours", IsRequired = false, EmitDefaultValue = true)]	
+        public decimal? TaskAggregatedValues_ActualHours {get; set;}
+	
+		[DataMember(Name = "TaskTypeID", IsRequired = false, EmitDefaultValue = true)]	
+        public int? Task_TaskTypeID {get; set;}
+	
+		[DataMember(Name = "TreatAsCompleted", IsRequired = false, EmitDefaultValue = true)]	
+        public bool TaskStatus_TreatAsCompleted {get; set;}
+	
+		[DataMember(Name = "UserActualHours", IsRequired = false, EmitDefaultValue = true)]	
+        public decimal? UserActualHours {get; set;}
+	
+		[DataMember(Name = "HasChildren", IsRequired = false, EmitDefaultValue = true)]	
+        public bool? HasChildren {get; set;}
+
+			
+	
+		#region Permissions Fields		
+        public bool CanEdit  {get; set;}
+        public bool CanDelete  {get; set;}
+		#endregion
     }
     #endregion
     

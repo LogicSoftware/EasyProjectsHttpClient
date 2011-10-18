@@ -360,6 +360,142 @@ namespace EasyProjects.ClientModel.Entities
     }
     #endregion
     
+    #region EventLog entity
+    /// <summary>
+    /// Generated class for entity EventLog
+    /// </summary>
+	[DataContract(Name = "EventLog", Namespace = "easyprojects.net/rest/v1")]
+	[DebuggerDisplay("Entity.EventLog")]
+	public partial class EventLog     { 
+		public int EntityBaseID { get { return Convert.ToInt32(EntryID);} set { EntryID = value; } }
+		
+		#region EntryID
+		private int _entryID; 
+
+		[DataMember(Name = "EntryID", IsRequired = false, EmitDefaultValue = true)]			
+        public int EntryID 
+		{ 
+			get
+			{
+				return _entryID;
+			}
+			set
+			{
+				if(_entryID != value)
+				{
+					_entryID = value;
+				} 
+			}
+		}
+		#endregion
+		
+		#region EntryDate
+		private DateTime? _entryDate; 
+
+		[DataMember(Name = "EntryDate", IsRequired = false, EmitDefaultValue = true)]			
+        public DateTime? EntryDate 
+		{ 
+			get
+			{
+				return _entryDate;
+			}
+			set
+			{
+				if(_entryDate != value)
+				{
+					_entryDate = value;
+				} 
+			}
+		}
+		#endregion
+		
+		#region Category
+		private string _category; 
+
+		[DataMember(Name = "Category", IsRequired = false, EmitDefaultValue = true)]			
+        public string Category 
+		{ 
+			get
+			{
+				return _category;
+			}
+			set
+			{
+				if(_category != value)
+				{
+					_category = value;
+				} 
+			}
+		}
+		#endregion
+		
+		#region EventType
+		private string _eventType; 
+
+		[DataMember(Name = "EventType", IsRequired = false, EmitDefaultValue = true)]			
+        public string EventType 
+		{ 
+			get
+			{
+				return _eventType;
+			}
+			set
+			{
+				if(_eventType != value)
+				{
+					_eventType = value;
+				} 
+			}
+		}
+		#endregion
+		
+		#region Title
+		private string _title; 
+
+		[DataMember(Name = "Title", IsRequired = false, EmitDefaultValue = true)]			
+        public string Title 
+		{ 
+			get
+			{
+				return _title;
+			}
+			set
+			{
+				if(_title != value)
+				{
+					_title = value;
+				} 
+			}
+		}
+		#endregion
+		
+		#region Message
+		private string _message; 
+
+		[DataMember(Name = "Message", IsRequired = false, EmitDefaultValue = true)]			
+        public string Message 
+		{ 
+			get
+			{
+				return _message;
+			}
+			set
+			{
+				if(_message != value)
+				{
+					_message = value;
+				} 
+			}
+		}
+		#endregion
+
+	
+	
+
+
+    }
+    #endregion
+    
     #region IssueType entity
     /// <summary>
     /// Generated class for entity IssueType
@@ -3867,6 +4003,122 @@ namespace EasyProjects.ClientModel.Entities
 				if(_userID != value)
 				{
 					_userID = value;
+				} 
+			}
+		}
+		
+		#endregion
+
+	
+	
+
+
+    }
+    #endregion
+    
+    #region TaskDependency entity
+    /// <summary>
+    /// Generated class for entity TaskDependency
+    /// </summary>
+	[DataContract(Name = "TaskDependency", Namespace = "easyprojects.net/rest/v1")]
+	[DebuggerDisplay("Entity.TaskDependency")]
+	public partial class TaskDependency     { 
+		public int EntityBaseID { get { return Convert.ToInt32(TaskDependencyID);} set { TaskDependencyID = value; } }
+		
+		#region TaskDependencyID
+		private int _taskDependencyID; 
+
+		[DataMember(Name = "TaskDependencyID", IsRequired = false, EmitDefaultValue = true)]			
+        public int TaskDependencyID 
+		{ 
+			get
+			{
+				return _taskDependencyID;
+			}
+			set
+			{
+				if(_taskDependencyID != value)
+				{
+					_taskDependencyID = value;
+				} 
+			}
+		}
+		#endregion
+		
+		#region Type
+		private int _type; 
+
+		[DataMember(Name = "Type", IsRequired = false, EmitDefaultValue = true)]			
+        public int Type 
+		{ 
+			get
+			{
+				return _type;
+			}
+			set
+			{
+				if(_type != value)
+				{
+					_type = value;
+				} 
+			}
+		}
+		#endregion
+		
+		#region Delay
+		private int _delay; 
+
+		[DataMember(Name = "Delay", IsRequired = false, EmitDefaultValue = true)]			
+        public int Delay 
+		{ 
+			get
+			{
+				return _delay;
+			}
+			set
+			{
+				if(_delay != value)
+				{
+					_delay = value;
+				} 
+			}
+		}
+		#endregion
+		
+		#region DependentTask
+		private int _dependentTaskID;
+		[DataMember(Name = "DependentTaskID")]
+        public int DependentTaskID 
+		{ 
+			get
+			{
+				return _dependentTaskID;
+			}
+			set
+			{
+				if(_dependentTaskID != value)
+				{
+					_dependentTaskID = value;
+				} 
+			}
+		}
+		
+		#endregion
+		
+		#region MasterTask
+		private int _masterTaskID;
+		[DataMember(Name = "MasterTaskID")]
+        public int MasterTaskID 
+		{ 
+			get
+			{
+				return _masterTaskID;
+			}
+			set
+			{
+				if(_masterTaskID != value)
+				{
+					_masterTaskID = value;
 				} 
 			}
 		}

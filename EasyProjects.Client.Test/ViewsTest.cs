@@ -8,12 +8,12 @@ using EasyProjects.ClientModel.Entities;
 namespace EasyProjects.Client.Test
 {
     /// <summary>
-    /// Summary description for GetListsTest
+    /// Summary description for ViewsTest
     /// </summary>
     [TestClass]
-    public class PutTest
+    public class ViewsTest
     {
-        public PutTest()
+        public ViewsTest()
         {
             //
             // TODO: Add constructor logic here
@@ -60,57 +60,13 @@ namespace EasyProjects.Client.Test
         //
         #endregion
 
-        
         [TestMethod]
-        public void PutProject()
+        public void GetProjectNamesList()
         {
-            using (HttpClient client = new HttpClient(Global.BaseAddress,true, Global.Username, Global.Password))
-            {
-                var project = new Project();
-
-                project.Name = "Test Project from API unittest:" + DateTime.Now.Ticks.ToString();
-
-                project.StartDate = DateTime.Now;
-
-                project.EndDate = DateTime.Now.AddDays(2);
-
-                var new_project = client.Post<Project>(project);
-
-                Assert.IsTrue(new_project.ProjectID != 0);
-
-                new_project.Name += " Test PutProject";
-
-                client.Put<Project>(Convert.ToString(new_project.ProjectID), new_project);
-
-                client.Delete<Project>(Convert.ToString(new_project.ProjectID.ToString()));
+            using (var client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
+            { 
+                var projects = client.Query<APIProjectNamesList>().ToList();
             }
         }
-
-        [TestMethod]
-        public void PutActivities()
-        {
-            using (HttpClient client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
-            {
-                var projects = client.Query<Project>().Take(1).ToList();
-
-                Assert.IsTrue(projects.Count != 0);
-
-                var activity = new Task();
-
-                activity.Name = "Test Task from API unittest:" + DateTime.Now.Ticks.ToString();
-                activity.TaskTypeID = 1;
-
-                activity.ProjectID = projects[0].ProjectID;
-
-                var new_task = client.Post<Task>(activity);
-
-                Assert.IsTrue(new_task.TaskID != 0);
-
-                new_task.Name += " Test PutActivities";
-
-                client.Put<Task>(Convert.ToString(new_task.TaskID), new_task);
-            }
-        }
-        
     }
 }

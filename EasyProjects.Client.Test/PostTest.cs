@@ -64,22 +64,21 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void PostProject()
         {
-            HttpClient client = new HttpClient(Global.BaseAddress);
+            using (HttpClient client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
+            {
+                var project = new Project();
 
-            client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
+                project.Name = "Test Project from API unittest:" + DateTime.Now.Ticks.ToString();
 
-            var project = new Project();
+                project.StartDate = DateTime.Now;
 
-            project.Name = "Test Project from API unittest:" + DateTime.Now.Ticks.ToString();
-
-            project.StartDate = DateTime.Now;
-
-            project.EndDate = DateTime.Now.AddDays(2);
+                project.EndDate = DateTime.Now.AddDays(2);
 
 
-            var new_project = client.Post<Project>(project);
+                var new_project = client.Post<Project>(project);
 
-            Assert.IsTrue(new_project.ProjectID != 0);
+                Assert.IsTrue(new_project.ProjectID != 0);
+            }
         }
 
         [TestMethod]
