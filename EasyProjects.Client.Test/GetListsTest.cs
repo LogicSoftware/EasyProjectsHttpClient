@@ -63,7 +63,7 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void GetProjects()
         {
-            using (var client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
+            using (var client = new HttpClient(Global.BaseAddress, Global.Username, Global.Password))
             { 
                 var projects = client.Query<Project>().Where(p => p.ProjectID == 1 && p.Progress < 20).ToList();
             }

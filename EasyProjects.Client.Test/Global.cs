@@ -8,10 +8,10 @@ namespace EasyProjects.Client.Test
 {
     static class Global
     {
-        public static string BaseAddress
+        public static Uri BaseAddress
         {
             get {
-                return ConfigurationManager.AppSettings["baseUrl"];
+                return new Uri(ConfigurationManager.AppSettings["baseUrl"]);
             }
         }
 
