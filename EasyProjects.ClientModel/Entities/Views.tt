@@ -1,0 +1,242 @@
+﻿<#@ template language="C#" hostspecific="True" debug="True" #>
+<#@ output extension="cs" encoding="utf-8"  #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Xml.XPath" #>
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Entities.cs" company="Logic Software">
+//   (c) Logic Software
+// </copyright>
+// <summary>
+//   Generated class for entities.
+//   !!!DO NOT CHANGE IT DIRECTLY!!!
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace EasyProjects.ClientModel.Entities
+{
+    using System;
+    using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Runtime.Serialization;
+	
+<# 
+    string viewsPath = Host.ResolvePath(@"..\Views.config");
+    var root = XElement.Load(viewsPath);
+   
+    string entityClassesPath = Host.ResolvePath(@"..\EntityClasses.config");
+    var entitiesRoot = XElement.Load(entityClassesPath);
+
+	var views =
+        from view in root.Descendants("View")
+        let viewName = view.Attribute("Name").Value
+		let hasIdenticalEntity = ((IEnumerable)entitiesRoot.XPathEvaluate("//EntityClass[@Name='" + viewName + "']")).Cast<XElement>().Any()			
+		let entityName = GetEntityClass(entitiesRoot, (string) view.Attribute("RootEntityName"))
+		let entity = ((IEnumerable) entitiesRoot.XPathEvaluate(string.Format(@"//EntityClass[@Name='{0}']", entityName))).Cast<XElement>().FirstOrDefault()
+		// exclude empty views
+		where view.Descendants("Field").Any()
+        orderby viewName
+        select new {Name = hasIdenticalEntity ? viewName + "View" : viewName, Class = view, entity = entity};
+			    
+    foreach (var view in views)
+    {
+		if(view.Class.Attribute("EnableAPI") == null || Convert.ToBoolean(view.Class.Attribute("EnableAPI").Value) == false)
+			continue;
+#>
+    #region <#= view.Name #> view
+    /// <summary>
+    /// Generated class for view <#= view.Name #>
+    /// </summary>
+	
+	[DebuggerDisplay("View.{ViewName}")]
+	[DataContract(Name = "<#= view.Name #>", Namespace = "easyprojects.net/rest/v1")]
+	public partial class <#= view.Name #> 
+    { 
+	    public const string ViewNameString = "<#= view.Name #>";
+        public string ViewName { get { return ViewNameString; } }
+	
+<#  	var fields =
+			from field in view.Class.Descendants("Field")
+			let fieldName = field.Attribute("Name").Value
+			let fieldEntity = ((IEnumerable) entitiesRoot.XPathEvaluate(string.Format(@"//EntityClass[@Name='{0}']", field.Attribute("EntityName").Value))).Cast<XElement>().SingleOrDefault()
+			let hasExpression = field.Attribute("Expression") != null
+			let entityField = fieldEntity == null ? null : ((IEnumerable) fieldEntity.XPathEvaluate(string.Format(@"./Fields//Field[@Name='{0}']", fieldName))).Cast<XElement>().SingleOrDefault()
+			let entityFieldHasAlias = entityField != null && entityField.Attribute("Alias") != null
+			let viewFieldHasAlias = field.Attribute("Alias") != null
+			let fullName = (entityFieldHasAlias) ? entityField.Attribute("Alias").Value : (viewFieldHasAlias ? field.Attribute("Alias").Value : (field.Attribute("EntityName").Value + "_" + fieldName)) 
+			where fieldName != view.Name
+        	select new {Name = fieldName, FullName = fullName, HasExpression = hasExpression, Class = field} ;
+					
+		foreach (var field in fields) {	
+			#>	
+		[DataMember(Name = "<#= field.HasExpression ? field.Name : field.FullName #>")]		
+        public <#= GetPropertyTypeForField(field.Class, entitiesRoot) #> <#= field.HasExpression ? field.Name : field.FullName #> {get; set;}
+<#  } #>
+<#  	var refFields =
+			from field in view.Class.Descendants("ReferenceField")
+			let fieldName = field.Attribute("Name").Value
+			where fieldName != view.Name
+				&& !fields.Any(f => f.Name == fieldName)
+        	select new {Name = fieldName, Class = field} ;
+		
+		 #>
+
+<#  	if(view.entity != null)
+{		
+		var permFields =
+			from field in view.entity.Descendants("PermissionField")
+			let fieldName = field.Attribute("Name").Value
+			let alias = field.Attribute("Alias").Value.Trim('[',']')
+			where fieldName != view.entity.Attribute("Name").Value
+		    where !fields.Any(f => f.Name == alias)
+        	select new {Name = fieldName, Alias = alias, Class = field} ;
+		
+		 #>
+			
+	
+<# 		if(view.entity.Attribute("PermissionTable") != null)
+		{ #>
+		#region Permissions Fields		
+        public bool CanEdit  {get; set;}
+        public bool CanDelete  {get; set;}
+		#endregion
+<# 		}
+		
+		if (view.Class.Descendants("CustomFieldsInclude") != null && view.Class.Descendants("CustomFieldsInclude").Count() > 0)
+		{
+#>
+	
+<#
+		}
+}		#>
+    }
+    #endregion
+    
+<#  } #>
+}
+
+
+<#+ 			
+	private string GetEntityClass(XElement entitiesDoc, string entityName)
+	{			
+		var	alias = (from entityAlias in entitiesDoc.Descendants("EntityClassAlias")
+			where entityAlias.Attribute("Name").Value == entityName
+			select entityAlias.Attribute("EntityClassName").Value).FirstOrDefault();	
+		
+		if(!string.IsNullOrEmpty(alias))
+		{
+			return alias; 
+		}
+		
+		return entityName;
+	}
+	
+	private string GetNameForDataContract(string name, int cutLength)
+	{
+		StringBuilder outputBuilder = new StringBuilder();
+		
+		int nextCharsToCopy = 0;
+		foreach(char ch in name)
+		{
+			if(Char.IsUpper(ch))
+			{
+				nextCharsToCopy = cutLength;
+			}
+			
+			if (nextCharsToCopy > 0)
+			{
+				outputBuilder.Append(ch);
+				nextCharsToCopy--;
+			}
+		}
+		
+		return outputBuilder.ToString();	
+	}
+	
+	private string GetPropertyTypeForField(XElement fieldElement, XElement entitiesDoc)
+	{		
+		IEnumerable dataTypes = (IEnumerable) fieldElement.XPathEvaluate(@"./Descriptor/@DataType");
+	
+		string entityName = GetEntityClass(entitiesDoc, fieldElement.Attribute("EntityName").Value);
+		string fieldName = (string) fieldElement.Attribute("Name");
+		
+		XElement entityClass = ((IEnumerable) entitiesDoc.XPathEvaluate(string.Format(@"//EntityClass[@Name='{0}']", entityName))).Cast<XElement>().FirstOrDefault();		
+		XElement entityField = ((IEnumerable) entityClass.XPathEvaluate(string.Format(@"./Fields//Field[@Name='{0}']", fieldName))).Cast<XElement>().FirstOrDefault();
+		
+		string primaryKeyField = (string) entityClass.Attribute("PrimaryKeyField");
+
+		string accessType = (string) fieldElement.Attribute("AccessType");
+		bool hasExpression = fieldElement.Attribute("Expression") != null;
+		
+		//check EntityConfig/Fields for type
+		if (!dataTypes.Cast<XAttribute>().Any() && entityField != null )
+		{			
+			dataTypes = (IEnumerable) entityField.XPathEvaluate(@"./Descriptor/@DataType");				
+			accessType = (string) entityField.Attribute("AccessType");
+			hasExpression = entityField.Attribute("Expression") != null;
+		}			
+		
+		//check EntityConfig/ReferenceFields for type
+		if (!dataTypes.Cast<XAttribute>().Any())
+		{
+			var refField = ((IEnumerable) entityClass.XPathEvaluate(string.Format(@"./ReferenceFields//ReferenceField[@Name='{0}']", fieldName))).Cast<XElement>().FirstOrDefault();
+				
+			if(refField != null)	
+			{
+				accessType = (string) refField.Attribute("AccessType");
+								
+				// use int type if it's a reference field
+				return accessType == "Mandatory" ? "int" : "int?";
+			}
+		}		
+		
+		bool nullable = (accessType != "Mandatory") && fieldName != primaryKeyField;
+		
+		switch ((string) dataTypes.Cast<XAttribute>().FirstOrDefault() )
+		{
+			case "Integer":
+				return nullable ? "int?" : "int";
+			case "Bool":
+				return nullable ? "bool?" : "bool";
+			case "Decimal":
+				return nullable ? "decimal?" : "decimal";
+			case "Date":
+				return nullable ? "DateTime?" : "DateTime";			
+			case "String":
+				return "string";
+			case "HtmlText":
+				return "string";
+			case "MultilineText":
+				return "string";				        
+			default:
+				return "object";
+		}		
+	}	
+		
+	private void AddDisplayFormatAnnotations(XElement fieldElement, XElement entitiesDoc)
+	{		
+		string formatString = (string) ((IEnumerable)fieldElement.XPathEvaluate(@"./Descriptor/@FormatString")).Cast<XAttribute>().FirstOrDefault();
+		
+		if (string.IsNullOrEmpty(formatString))
+		{
+			string entityName = GetEntityClass(entitiesDoc, fieldElement.Attribute("EntityName").Value);
+			
+			formatString = (string)  ((IEnumerable) entitiesDoc.XPathEvaluate(
+			string.Format(@"//EntityClass[@Name='{1}']//Field[@Name='{0}']/Descriptor/@FormatString", 
+				fieldElement.Attribute("Name").Value,
+				entityName))).Cast<XAttribute>().FirstOrDefault();	 
+		}
+		
+		if (!string.IsNullOrEmpty(formatString))
+		{					
+			this.WriteLine(string.Format("[DisplayFormat(DataFormatString = \"{0}\")]", formatString));	 
+		}		
+	}	
+	
+	#>
