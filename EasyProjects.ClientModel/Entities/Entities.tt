@@ -55,7 +55,7 @@ namespace EasyProjects.ClientModel.Entities
 			from field in entity.Class.Descendants("Field")
 			let fieldName = (field.Attribute("Alias") ?? field.Attribute("Name")).Value
 			where fieldName != entity.Name && 
-			(field.Attribute("EnableAPI") != null || Convert.ToBoolean(field.Attribute("EnableAPI")) == true)
+			(field.Attribute("EnableAPI") == null || Convert.ToBoolean(field.Attribute("EnableAPI").Value) == true)
         	select new {Name = fieldName, Class = field} ;
 		
 		foreach (var field in fields) { 

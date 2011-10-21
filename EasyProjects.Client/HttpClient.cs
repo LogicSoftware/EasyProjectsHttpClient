@@ -273,14 +273,20 @@ namespace EasyProjects.Client
             if (entityType == typeof(Message))
                 return "messages";
 
-            if (entityType == typeof(PortfolioList))
-                return "portfoliolist";
+            if (entityType == typeof(APIPortfolioList))
+                return "views/portfoliolist";
 
-            if (entityType == typeof(TaskListPlain))
-                return "activitylist";
+            if (entityType == typeof(APITaskList))
+                return "views/activitylist";
 
-            if (entityType == typeof(ProjectList))
-                return "projectlist";
+            if (entityType == typeof(APIProjectList))
+                return "views/projectlist";
+
+            if (entityType == typeof(APIProjectNamesList))
+                return "views/projectnameslist";
+
+            if (entityType == typeof(APITaskNamesList))
+                return "views/activitynameslist";
 
             return entityType.ToString().ToLower();
         }

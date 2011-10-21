@@ -82,7 +82,7 @@ namespace EasyProjects.Client.Test
 
                 client.Put<Project>(Convert.ToString(new_project.ProjectID), new_project);
 
-                client.Delete<Project>(Convert.ToString(new_project.ProjectID.ToString()));
+                client.Delete<Project>(Convert.ToString(new_project.ProjectID));
             }
         }
 

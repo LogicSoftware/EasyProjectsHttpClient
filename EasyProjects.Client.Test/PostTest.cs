@@ -84,24 +84,23 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void PostActivities()
         {
-            HttpClient client = new HttpClient(Global.BaseAddress);
+            using (HttpClient client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
+            {
+                var projects = client.Query<Project>().Take(1).ToList();
 
-            client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
+                Assert.IsTrue(projects.Count != 0);
 
-            var projects = client.Query<Project>().Take(1).ToList();
+                var activity = new Task();
 
-            Assert.IsTrue(projects.Count != 0);
+                activity.Name = "Test Task from API unittest:" + DateTime.Now.Ticks.ToString();
+                activity.TaskTypeID = 1;
 
-            var activity = new Task();
+                activity.ProjectID = projects[0].ProjectID;
 
-            activity.Name = "Test Task from API unittest:" + DateTime.Now.Ticks.ToString();
-            activity.TaskTypeID = 1;
+                var new_task = client.Post<Task>(activity);
 
-            activity.ProjectID = projects[0].ProjectID;
-
-            var new_task = client.Post<Task>(activity);
-
-            Assert.IsTrue(new_task.TaskID != 0);
+                Assert.IsTrue(new_task.TaskID != 0);
+            }
         }
     }
 }
