@@ -63,7 +63,7 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void GetProjectNamesList()
         {
-            using (var client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
+            using (var client = new HttpClient(Global.BaseAddress, Global.Username, Global.Password))
             { 
                 var projects = client.Query<APIProjectNamesList>().ToList();
             }

@@ -64,7 +64,7 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void PutProject()
         {
-            using (HttpClient client = new HttpClient(Global.BaseAddress,true, Global.Username, Global.Password))
+            using (HttpClient client = new HttpClient(Global.BaseAddress, Global.Username, Global.Password))
             {
                 var project = new Project();
 
@@ -89,7 +89,7 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void PutActivities()
         {
-            using (HttpClient client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
+            using (HttpClient client = new HttpClient(Global.BaseAddress, Global.Username, Global.Password))
             {
                 var projects = client.Query<Project>().Take(1).ToList();
 
