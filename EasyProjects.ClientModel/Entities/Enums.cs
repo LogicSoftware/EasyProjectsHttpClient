@@ -5,97 +5,11 @@ using System.Text;
 using System.Runtime.Serialization;
 
 
-namespace EasyProjects.ClientModel.Entities
+namespace EasyProjects.ClientModel.Entities.Enums
 {
-    /// <summary>
-    /// CustomField
-    /// </summary>
-    [Serializable]
-    public class CustomField
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CustomField"/> class.
-        /// </summary>
-        public CustomField()
-        { }
-
-
-        #region Alias
-
-        /// <summary>
-        /// Gets or sets the alias.
-        /// </summary>
-        /// <value>The alias.</value>
-        [DataMember]
-        public string Alias { get; set; }
-        #endregion
-
-        #region DataType
-
-        /// <summary>
-        /// Gets or sets the type of the data.
-        /// </summary>
-        /// <value>The type of the data.</value>
-        [DataMember]
-        public DataType DataType { get; set; }
-        #endregion
-
-        #region FieldID
-        /// <summary>
-        /// ID of the field
-        /// </summary>
-        [DataMember(Name = "FieldID")]
-        public int FieldID
-        {
-            get;
-            set;
-        }
-        #endregion
-
-        #region FieldType
-        /// <summary>
-        /// Type of the field
-        /// </summary>
-        [DataMember]
-        public CustomFieldDataType FieldType
-        {
-            get;
-            set;
-        }
-        #endregion
-
-        #region AccessType
-        /// <summary>
-        /// Gets or sets the type of the access.
-        /// </summary>
-        /// <value>The type of the access.</value>
-        [DataMember]
-        public FieldAccessType AccessType
-        {
-            get;
-            set;
-        }
-        #endregion
-
-        #region Title
-        /// <summary>
-        /// Gets or sets the title.
-        /// </summary>
-        /// <value>The title.</value>
-        [DataMember]
-        public string Title
-        {
-            get;
-            set;
-        }
-        #endregion
-
-    }
-
-    
-    /// <summary>
-    /// Type of data for the field
-    /// </summary>
+    ///// <summary>
+    ///// Type of data for the field
+    ///// </summary>
     public enum DataType
     {
         /// <summary>
@@ -158,7 +72,6 @@ namespace EasyProjects.ClientModel.Entities
         [EnumMember]
         Hyperlink
     }
-
 
     /// <summary>
     /// Supported custom fields data types.

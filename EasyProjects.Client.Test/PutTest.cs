@@ -64,35 +64,52 @@ namespace EasyProjects.Client.Test
         [TestMethod]
         public void PutProject()
         {
-            HttpClient client = new HttpClient(Global.BaseAddress);
+            using (HttpClient client = new HttpClient(Global.BaseAddress,true, Global.Username, Global.Password))
+            {
+                var project = new Project();
 
-            client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
+                project.Name = "Test Project from API unittest:" + DateTime.Now.Ticks.ToString();
 
-            var projects = client.Query<Project>().Take(1).ToList();
+                project.StartDate = DateTime.Now;
 
-            Assert.IsTrue(projects.Count == 1);
+                project.EndDate = DateTime.Now.AddDays(2);
 
-            var project = projects[0];
-            project.Name += " Test PutProject";
+                var new_project = client.Post<Project>(project);
 
-            client.Put<Project>(project.ProjectID.ToString(), project);
+                Assert.IsTrue(new_project.ProjectID != 0);
+
+                new_project.Name += " Test PutProject";
+
+                client.Put<Project>(Convert.ToString(new_project.ProjectID), new_project);
+
+                client.Delete<Project>(Convert.ToString(new_project.ProjectID));
+            }
         }
 
         [TestMethod]
         public void PutActivities()
         {
-            HttpClient client = new HttpClient(Global.BaseAddress);
+            using (HttpClient client = new HttpClient(Global.BaseAddress, true, Global.Username, Global.Password))
+            {
+                var projects = client.Query<Project>().Take(1).ToList();
 
-            client.AddBaseAuthenticationHeaders(Global.Username, Global.Password);
+                Assert.IsTrue(projects.Count != 0);
 
-            var activities = client.Query<Task>().Take(1).ToList();
+                var activity = new Task();
 
-            Assert.IsTrue(activities.Count == 1);
+                activity.Name = "Test Task from API unittest:" + DateTime.Now.Ticks.ToString();
+                activity.TaskTypeID = 1;
 
-            var activity = activities[0];
-            activity.Name += " Test PutActivities";
+                activity.ProjectID = projects[0].ProjectID;
 
-            client.Put<Task>(activity.TaskID.ToString(), activity);
+                var new_task = client.Post<Task>(activity);
+
+                Assert.IsTrue(new_task.TaskID != 0);
+
+                new_task.Name += " Test PutActivities";
+
+                client.Put<Task>(Convert.ToString(new_task.TaskID), new_task);
+            }
         }
         
     }

@@ -75,7 +75,7 @@ namespace EasyProjects.ClientModel.Entities
 					
 		foreach (var field in fields) {	
 			#>	
-		[DataMember(Name = "<#= field.Name #>", IsRequired = false, EmitDefaultValue = true)]	
+		[DataMember(Name = "<#= field.HasExpression ? field.Name : field.FullName #>")]		
         public <#= GetPropertyTypeForField(field.Class, entitiesRoot) #> <#= field.HasExpression ? field.Name : field.FullName #> {get; set;}
 <#  } #>
 <#  	var refFields =
