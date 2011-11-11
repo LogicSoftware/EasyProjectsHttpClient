@@ -112,5 +112,17 @@ namespace EasyProjects.Client.Test
             Assert.AreEqual(1, collection.Count);
             Assert.AreEqual(" ", collection["a"]);
         }
+
+        [TestMethod]
+        public void ParseEncodedString_EncodesWithDataEncoding()
+        {
+            HttpNameValueCollection collection = new HttpNameValueCollection();
+
+            collection["+"] = "+";
+
+            string result = collection.ToString();
+
+            Assert.AreEqual("%2B=%2B", result);
+        }
     }
 }

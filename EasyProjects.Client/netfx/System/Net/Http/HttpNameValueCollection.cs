@@ -64,7 +64,9 @@ namespace System.Net.Http
 		public override string ToString()
 		{
             return  String.Join("&",
-                    this.AllKeys.Select(k =>  Uri.EscapeUriString(k + "=" + this[k])).ToArray());
+                    this.AllKeys.Select(k =>  
+                        Uri.EscapeDataString(k) + "=" + Uri.EscapeDataString(this[k])
+                        ).ToArray());
 		}
 	}
 }
