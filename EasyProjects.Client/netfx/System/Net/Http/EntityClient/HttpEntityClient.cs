@@ -468,7 +468,7 @@ namespace System.Net.Http
 				}
 
 #if DEBUG
-				Debug.WriteLine("Query uri: " + uri);
+				Debug.WriteLine("Query uri: " + uri.AbsoluteUri);
 #endif
 
 				var response = this.query.EntityClient.http.Get(uri);
@@ -513,7 +513,7 @@ namespace System.Net.Http
 					.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(Expression), query.Provider.GetType() }, null)
 					.Invoke(query, new object[] { replaced, query.Provider });
 
-				return new Uri(query.RequestUri.ToString().Replace("()?$", "?$"));
+				return new Uri(query.RequestUri.AbsoluteUri.Replace("()?$", "?$"));
 			}
 
 			private static bool IsSelect(Expression expression)
