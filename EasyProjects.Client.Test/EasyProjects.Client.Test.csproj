@@ -46,6 +46,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrderingTest.cs" />
     <Compile Include="DeleteTest.cs" />
     <Compile Include="HttpNameValueCollectionTest.cs" />
     <Compile Include="PostTest.cs" />
