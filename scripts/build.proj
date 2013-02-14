@@ -1,0 +1,41 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" >
+    <!-- UsingTask AssemblyFile="MSBuild\TestTools\LogicSoftware.EasyProjects.TestTools.dll" TaskName="LogicSoftware.EasyProjects.TestTools.CoverageToXml" />
+    <UsingTask AssemblyFile="MSBuild\TestTools\LogicSoftware.EasyProjects.TestTools.dll" TaskName="LogicSoftware.EasyProjects.TestTools.ValidateCoverageLevel" /-->
+
+    <PropertyGroup>
+        <BuildPropertiesDebug>Configuration=Debug;Platform=Any Cpu;TreatWarningsAsErrors=true;StyleCopTreatErrorsAsWarnings=false;</BuildPropertiesDebug>
+        <BinariesDeploymentDirectory>..\deploy</BinariesDeploymentDirectory>
+        <NugetDeploymentDirectory>..\pack</NugetDeploymentDirectory>
+        <SourceCodeDirectory>..</SourceCodeDirectory>
+
+        <AssemblyVersion>$(CCNetLabel)</AssemblyVersion>
+        <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">1.0.0.0</AssemblyVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectToBuildDebug Include="..\EasyProjects.HttpClient.sln" />
+    </ItemGroup>
+
+    <!-- Build -->
+
+    <Target Name="Check" DependsOnTargets="RebuildDebug">
+    </Target>
+
+    <Target Name="RebuildDebug">
+        <MSBuild Targets="Rebuild" Projects="@(ProjectToBuildDebug)" Properties="$(BuildPropertiesDebug)" />
+    </Target>
+
+    <Target Name="Nuget" DependsOnTargets="RebuildDebug">
+      <ItemGroup>
+        <BinariesToDeploy Include="$(SourceCodeDirectory)\EasyProjects.Client\bin\Debug\EasyProjects.Client.*" />
+        <BinariesToDeploy Include="$(SourceCodeDirectory)\EasyProjects.Client\bin\Debug\EasyProjects.ClientModel.*" />
+      </ItemGroup>
+
+      <RemoveDir Directories="$(NugetDeploymentDirectory)" />
+      <MakeDir Directories="$(NugetDeploymentDirectory)" />
+      <MakeDir Directories="$(NugetDeploymentDirectory)\lib\net40" />
+
+      <Copy SourceFiles="@(BinariesToDeploy)" DestinationFolder="$(NugetDeploymentDirectory)\lib\net40" />
+    </Target>
+
+</Project>
