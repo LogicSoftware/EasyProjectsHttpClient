@@ -208,6 +208,12 @@ namespace EasyProjects.Client
             if (entityType == typeof(APITaskNamesList))
                 return "views/activitynameslist";
 
+            if (entityType == typeof (CustomField))
+                return "inner/customfields";
+
+            if (entityType == typeof(CustomFieldRestriction))
+                return "inner/сustomfieldrestrictions";
+
             return entityType.ToString().ToLower();
         }
     }
