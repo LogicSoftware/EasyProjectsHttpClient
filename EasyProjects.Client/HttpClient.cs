@@ -212,7 +212,7 @@ namespace EasyProjects.Client
                 return "inner/customfields";
 
             if (entityType == typeof(CustomFieldRestriction))
-                return "inner/сustomfieldrestrictions";
+                return "inner/customfieldrestrictions";
 
             return entityType.ToString().ToLower();
         }
