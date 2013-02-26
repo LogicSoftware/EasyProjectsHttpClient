@@ -23,10 +23,11 @@
 namespace EasyProjects.ClientModel.Entities
 {
     using System;
-	using System.Diagnostics;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Runtime.Serialization;
 	using System.Xml.Serialization;
+
 <# 
     string entityClassesPath = Host.ResolvePath(@"..\EntityClasses.config");
     var root = XElement.Load(entityClassesPath);
@@ -42,79 +43,57 @@ namespace EasyProjects.ClientModel.Entities
 		if(entity.Class.Attribute("EnableAPI") == null || Convert.ToBoolean(entity.Class.Attribute("EnableAPI").Value) == false)
 			continue;
 #>
-    #region <#= entity.Name #> entity
     /// <summary>
     /// Generated class for entity <#= entity.Name #>
     /// </summary>
-	[DataContract(Name = "<#= ((entity.Name == "Task") ? "Activity" : entity.Name) #>", Namespace = "easyprojects.net/rest/v1")]
-	[DebuggerDisplay("Entity.<#= entity.Name #>")]
-	public partial class <#= entity.Name #> <# if(ContainsCustomFields(entity.Class)){#> : ICustomFieldsContainer <#}#>
+	[DataContract(Namespace="")]
+	public partial class <#= entity.Name #> 
+
+<#	var pkField = GetPKField(entity.Class);
+#>
     { 
-		public int EntityBaseID { get { return Convert.ToInt32(<#= ((entity.Class.Attribute("TableName") == null || entity.Class.Attribute("TableName").Value == "None" )? "0" : entity.Class.Attribute("PrimaryKeyField").Value) #>);} set { <#= entity.Class.Attribute("PrimaryKeyField").Value#> = value; } }
+		public <#= entity.Name #>()
+		{
+<#  if (IsCustomFieldsEnabled(entity.Class)) { #>
+            this.CustomFields = new CustomFieldsCollection();
+<#  } // IsCustomFieldsEnabled#>
+		}
+
+<#	if (pkField != null)
+	{ #>
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.<#= pkField #>;} set { this.<#= pkField #> = value; } }
+<#  } #>
 <#  	var fields =
 			from field in entity.Class.Descendants("Field")
 			let fieldName = (field.Attribute("Alias") ?? field.Attribute("Name")).Value
 			where fieldName != entity.Name && 
-			(field.Attribute("EnableAPI") == null || Convert.ToBoolean(field.Attribute("EnableAPI").Value) == true)
+			(field.Attribute("EnableAPI") == null || Convert.ToBoolean(field.Attribute("EnableAPI").Value) == true) &&
+			(field.Attribute("ManagedType") == null || field.Attribute("ManagedType").Value != "byte[]")
         	select new {Name = fieldName, Class = field} ;
 		
 		foreach (var field in fields) { 
 			
-		string privateFieldName = "_" + field.Name.ToLower()[0] + field.Name.Remove(0, 1);	
-#>		
-		#region <#= field.Name #>
-		private <#= GetPropertyTypeForField(field.Class) #> <#= privateFieldName #>; 
-
-		[DataMember(Name = "<#= field.Name #>", IsRequired = false, EmitDefaultValue = true)]			
-        public <#= GetPropertyTypeForField(field.Class) #> <#= field.Name #> 
-		{ 
-			get
-			{
-				return <#= privateFieldName #>;
-			}
-			set
-			{
-				if(<#= privateFieldName #> != value)
-				{
-					<#= privateFieldName #> = value;
-				} 
-			}
-		}
-		#endregion
+		#>
+		[DataMember]
+        public <#= GetPropertyTypeForField(field.Class) #> <#= field.Name #> { get; set; }
 <#  } #>
 <#  	var refFields =
 			from field in entity.Class.Descendants("ReferenceField")
 			let fieldName = field.Attribute("Name").Value
 			where fieldName != entity.Name
 				&& !fields.Any(f => f.Name == fieldName)
-        	select new {Name = fieldName, Class = field} ;
+        	select new {Name = fieldName, Class = field, Nullable = field.Attribute("ReferenceType").Value != "Mandatory"} ;
 		
 		foreach (var field in refFields) { 
 		
-		string privateFieldName = "_" + field.Name.ToLower()[0] + field.Name.Remove(0, 1);				
 			
 		string refEntityName = field.Name.Remove(field.Name.Length-2, 2);	
 		string privateFieldEntityName = "_" + refEntityName.ToLower()[0] + refEntityName.Remove(0, 1);
 #>		
-		#region <#= refEntityName #>
-		private int <#= privateFieldName #>;
-		[DataMember(Name = "<#= field.Name #>")]
-        public int <#= field.Name #> 
-		{ 
-			get
-			{
-				return <#= privateFieldName #>;
-			}
-			set
-			{
-				if(<#= privateFieldName #> != value)
-				{
-					<#= privateFieldName #> = value;
-				} 
-			}
-		}
-		
-		#endregion
+		[DataMember]
+        public <#= field.Nullable ? "int?" : "int"#> <#= field.Name #> { get; set; }
 <#  } #>
 
 <#  	var permFields =
@@ -129,7 +108,7 @@ namespace EasyProjects.ClientModel.Entities
 <#			
 			foreach (var permField in permFields) 
 			{ #>		
-		[DataMember(Name = "<#= permField.Alias #>")]
+		[DataMember]
         public bool <#= permField.Alias #>  {get; set;}
 <#  		} #>
 		#endregion		
@@ -138,45 +117,36 @@ namespace EasyProjects.ClientModel.Entities
 <# 		if(entity.Class.Attribute("PermissionTable") != null)
 		{ #>
 		#region Permissions Fields		
-        public bool CanEdit  {get; set;}
-        public bool CanDelete  {get; set;}
-		#endregion
-<# 		} #>
-<# 		if(ContainsCustomFields(entity.Class))
+<#		if (!permFields.Any(f => f.Alias == "CanEdit") && !fields.Any(f => f.Name == "CanEdit"))
 		{ #>
+		[DataMember]
+		public bool CanEdit  {get; set;}
+<#		} #>
 
-		#region Custom fields
-        private CustomFieldsCollection customFields;
-		[DataMember(Name = "CustomFields")]
-		public CustomFieldsCollection CustomFields 
-		{
-			get 
-			{
-				if (customFields == null) { customFields = new CustomFieldsCollection();}
-				return customFields;
-			}
-			set{
-				customFields = value;
-			}
-		}
-		#endregion
-<#  } #>
+<#		if (!permFields.Any(f => f.Alias == "CanDelete") && !fields.Any(f => f.Name == "CanDelete"))
+		{ #>
+		[DataMember]
+		public bool CanDelete  {get; set;}
+<#		} #>		#endregion
+<# 		} #>
 
+<# 		if(IsCustomFieldsEnabled(entity.Class))
+		{ #>
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+<# 		} // IsCustomFieldsEnabled #>
 
     }
-    #endregion
     
 <#  } #>
-
-
 }
 
 
 <#+ 	
-	private bool ContainsCustomFields(XElement element)
+	private string GetPKField(XElement element)
 	{
-		return element.Attribute("DisableCustomFields") == null || !Convert.ToBoolean(element.Attribute("DisableCustomFields").Value);
-	}
+		return ((element.Attribute("TableName") == null || element.Attribute("TableName").Value == "None" || element.Attribute("PrimaryKeyField") == null || element.Attribute("PrimaryKeyField").Value == "Name" )? null : (element.Attribute("PrimaryKeyField").Value ));
+	}	
 
 	private string GetEntityClass(XElement root, string entityName)
 	{			
@@ -192,28 +162,11 @@ namespace EasyProjects.ClientModel.Entities
 		return entityName;
 	}
 	
-	private string GetNameForDataContract(string name, int cutLength)
+	private bool IsCustomFieldsEnabled(XElement entityClass)
 	{
-		StringBuilder outputBuilder = new StringBuilder();
-		
-		int nextCharsToCopy = 0;
-		foreach(char ch in name)
-		{
-			if(Char.IsUpper(ch))
-			{
-				nextCharsToCopy = cutLength;
-			}
-			
-			if (nextCharsToCopy > 0)
-			{
-				outputBuilder.Append(ch);
-				nextCharsToCopy--;
-			}
-		}
-		
-		return outputBuilder.ToString();	
+		return entityClass.Attribute("DisableCustomFields") == null || !Convert.ToBoolean(entityClass.Attribute("DisableCustomFields").Value);
 	}
-	
+
 	private string GetPropertyTypeForField(XElement fieldElement)
 	{
 		var entityClass = fieldElement.Ancestors("EntityClass").First(); 
@@ -227,6 +180,12 @@ namespace EasyProjects.ClientModel.Entities
 		
 		IEnumerable dataTypes = (IEnumerable) fieldElement.XPathEvaluate(@"./Descriptor/@DataType");
 	
+		var predefinedManagedType = fieldElement.Attribute("ManagedType");
+		if (predefinedManagedType != null)
+		{
+			return (string)predefinedManagedType;
+		}
+
 		switch ((string) dataTypes.Cast<XAttribute>().FirstOrDefault() )
 		{
 			case "Integer":
@@ -243,6 +202,9 @@ namespace EasyProjects.ClientModel.Entities
 				return "string";
 			case "MultilineText":
 				return "string";				        
+			case "XML":
+			case "Raw":
+				return "string";
 			default:
 				return "object";
 		}		
@@ -336,5 +298,38 @@ namespace EasyProjects.ClientModel.Entities
 			this.WriteLine(")]");				
 		}
 	
-	}	
+	}
+	
+	private void AddPermissionAttributes(XElement entityElement,XElement root)
+	{
+	   var hasVisibilityPermissionAttribute = entityElement.Attribute("HasVisibilityPermission");
+	   if(hasVisibilityPermissionAttribute != null)
+	   {
+	     string attribute = string.Format("[HasVisibilityPermission(Name=\"{0}\")]", hasVisibilityPermissionAttribute.Value);
+	     this.Write(attribute);
+		 this.Write(Environment.NewLine);
+
+	   }else
+	   {
+	     // check if this entity have root entity with permission
+		 var rootEntityNameAttribute  = entityElement.Attribute("RootEntityName");
+		 if(rootEntityNameAttribute != null && rootEntityNameAttribute.Value != "None")
+		 {
+			var entities =
+			from entityClass in root.Descendants("EntityClass")
+			let entityName = entityClass.Attribute("Name").Value
+			let visibilityPermission =  entityClass.Attribute("HasVisibilityPermission")!= null ?entityClass.Attribute("HasVisibilityPermission").Value : null
+			select new {Name = entityName, VisibilityPermissionName = visibilityPermission};
+
+		    var rootEntity = entities.First(p=>p.Name == rootEntityNameAttribute.Value);
+		
+		    if(rootEntity.VisibilityPermissionName != null)
+			{
+				string attribute = string.Format("[HasVisibilityPermission(Name=\"{0}\")]", rootEntity.VisibilityPermissionName);
+				this.Write(attribute);
+				this.Write(Environment.NewLine);
+			}
+		 }
+	   }
+	}
 	#>

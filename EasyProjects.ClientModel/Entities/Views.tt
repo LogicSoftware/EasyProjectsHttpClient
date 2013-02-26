@@ -25,7 +25,7 @@ namespace EasyProjects.ClientModel.Entities
     using System.Collections.Generic;
 	using System.Diagnostics;
 	using System.Runtime.Serialization;
-	
+    using System.Xml.Serialization;
 <# 
     string viewsPath = Host.ResolvePath(@"..\Views.config");
     var root = XElement.Load(viewsPath);
@@ -42,25 +42,19 @@ namespace EasyProjects.ClientModel.Entities
 		// exclude empty views
 		where view.Descendants("Field").Any()
         orderby viewName
-        select new {Name = hasIdenticalEntity ? viewName + "View" : viewName, Class = view, entity = entity};
+        select new {Name = hasIdenticalEntity ? viewName + "View" : viewName, Class = view, entity = entity, entityName = entityName};
 			    
     foreach (var view in views)
     {
-		if(view.Class.Attribute("EnableAPI") == null || Convert.ToBoolean(view.Class.Attribute("EnableAPI").Value) == false)
-			continue;
+		var rootEntityPk = GetViewBaseID(view.entityName, view.entity, view.Class,entitiesRoot);
+
 #>
-    #region <#= view.Name #> view
     /// <summary>
     /// Generated class for view <#= view.Name #>
     /// </summary>
-	
 	[DebuggerDisplay("View.{ViewName}")]
-	[DataContract(Name = "<#= view.Name #>", Namespace = "easyprojects.net/rest/v1")]
 	public partial class <#= view.Name #> 
     { 
-	    public const string ViewNameString = "<#= view.Name #>";
-        public string ViewName { get { return ViewNameString; } }
-	
 <#  	var fields =
 			from field in view.Class.Descendants("Field")
 			let fieldName = field.Attribute("Name").Value
@@ -69,13 +63,12 @@ namespace EasyProjects.ClientModel.Entities
 			let entityField = fieldEntity == null ? null : ((IEnumerable) fieldEntity.XPathEvaluate(string.Format(@"./Fields//Field[@Name='{0}']", fieldName))).Cast<XElement>().SingleOrDefault()
 			let entityFieldHasAlias = entityField != null && entityField.Attribute("Alias") != null
 			let viewFieldHasAlias = field.Attribute("Alias") != null
-			let fullName = (entityFieldHasAlias) ? entityField.Attribute("Alias").Value : (viewFieldHasAlias ? field.Attribute("Alias").Value : (field.Attribute("EntityName").Value + "_" + fieldName)) 
+			let fullName = viewFieldHasAlias ? field.Attribute("Alias").Value : ((entityFieldHasAlias) ? entityField.Attribute("Alias").Value : (field.Attribute("EntityName").Value + "_" + fieldName)) 
 			where fieldName != view.Name
-        	select new {Name = fieldName, FullName = fullName, HasExpression = hasExpression, Class = field} ;
+        	select new {Name = fieldName, FullName = fullName, HasExpression = hasExpression, Class = field, EntityName = field.Attribute("EntityName").Value } ;
 					
 		foreach (var field in fields) {	
-			#>	
-		[DataMember(Name = "<#= field.HasExpression ? field.Name : field.FullName #>")]		
+			#>
         public <#= GetPropertyTypeForField(field.Class, entitiesRoot) #> <#= field.HasExpression ? field.Name : field.FullName #> {get; set;}
 <#  } #>
 <#  	var refFields =
@@ -85,7 +78,10 @@ namespace EasyProjects.ClientModel.Entities
 				&& !fields.Any(f => f.Name == fieldName)
         	select new {Name = fieldName, Class = field} ;
 		
-		 #>
+		foreach (var field in refFields) { 
+#>		
+        public <#= GetPropertyTypeForField(field.Class, entitiesRoot) #>  <#= field.Name #>  {get; set;}
+<#  } #>
 
 <#  	if(view.entity != null)
 {		
@@ -97,32 +93,75 @@ namespace EasyProjects.ClientModel.Entities
 		    where !fields.Any(f => f.Name == alias)
         	select new {Name = fieldName, Alias = alias, Class = field} ;
 		
-		 #>
-			
+		if(permFields.Any())
+		{ #>
+<#			
+			foreach (var permField in permFields) 
+			{ #>		
+        public bool <#= permField.Alias #>  {get; set;}
+<#  		} #>
+<#		} #>	
 	
 <# 		if(view.entity.Attribute("PermissionTable") != null)
 		{ #>
-		#region Permissions Fields		
-        public bool CanEdit  {get; set;}
-        public bool CanDelete  {get; set;}
-		#endregion
+<#		if (!permFields.Any(f => f.Alias == "CanEdit"))
+		{ #>
+			public bool CanEdit  {get; set;}
+<#		} #>
+
+<#		if (!permFields.Any(f => f.Alias == "CanDelete"))
+		{ #>
+			public bool CanDelete  {get; set;}
+<#		} #>
 <# 		}
 		
-		if (view.Class.Descendants("CustomFieldsInclude") != null && view.Class.Descendants("CustomFieldsInclude").Count() > 0)
-		{
-#>
-	
-<#
-		}
 }		#>
     }
-    #endregion
     
 <#  } #>
 }
 
 
 <#+ 			
+	public class EntityFieldInfo
+	{
+		public string EntityName { get; set; }
+		public string FieldName { get; set; }
+		public string FieldFullName { get; set; }
+	}
+
+	private EntityFieldInfo GetViewBaseID(string entityName, XElement element, XElement view,XElement entitiesRoot)
+	{
+		var fields =
+			from field in view.Descendants("Field")
+			let fieldName = field.Attribute("Name").Value
+			let fieldEntity = ((IEnumerable) entitiesRoot.XPathEvaluate(string.Format(@"//EntityClass[@Name='{0}']", field.Attribute("EntityName").Value))).Cast<XElement>().SingleOrDefault()
+			let hasExpression = field.Attribute("Expression") != null
+			let entityField = fieldEntity == null ? null : ((IEnumerable) fieldEntity.XPathEvaluate(string.Format(@"./Fields//Field[@Name='{0}']", fieldName))).Cast<XElement>().SingleOrDefault()
+			let entityFieldHasAlias = entityField != null && entityField.Attribute("Alias") != null
+			let viewFieldHasAlias = field.Attribute("Alias") != null
+			let fullName = (entityFieldHasAlias) ? entityField.Attribute("Alias").Value : (viewFieldHasAlias ? field.Attribute("Alias").Value : (field.Attribute("EntityName").Value + "_" + fieldName)) 
+			where fieldName != view.Name
+        	select new EntityFieldInfo {FieldFullName = fullName,  EntityName = field.Attribute("EntityName").Value, FieldName = fieldName};
+    
+	
+	    if((element.Attribute("TableName") == null ||
+		    element.Attribute("TableName").Value == "None" || 
+			element.Attribute("PrimaryKeyField") == null || 
+			element.Attribute("PrimaryKeyField").Value == "Name" ))
+		{
+		   return null;
+		}
+		else
+		{
+		   var pkFieldName = element.Attribute("PrimaryKeyField").Value;
+		   var field = fields.FirstOrDefault(p=>p.EntityName == entityName && p.FieldName == pkFieldName);
+
+		   return field;
+		}
+	}
+	
+	
 	private string GetEntityClass(XElement entitiesDoc, string entityName)
 	{			
 		var	alias = (from entityAlias in entitiesDoc.Descendants("EntityClassAlias")
@@ -135,28 +174,6 @@ namespace EasyProjects.ClientModel.Entities
 		}
 		
 		return entityName;
-	}
-	
-	private string GetNameForDataContract(string name, int cutLength)
-	{
-		StringBuilder outputBuilder = new StringBuilder();
-		
-		int nextCharsToCopy = 0;
-		foreach(char ch in name)
-		{
-			if(Char.IsUpper(ch))
-			{
-				nextCharsToCopy = cutLength;
-			}
-			
-			if (nextCharsToCopy > 0)
-			{
-				outputBuilder.Append(ch);
-				nextCharsToCopy--;
-			}
-		}
-		
-		return outputBuilder.ToString();	
 	}
 	
 	private string GetPropertyTypeForField(XElement fieldElement, XElement entitiesDoc)
@@ -189,7 +206,7 @@ namespace EasyProjects.ClientModel.Entities
 				
 			if(refField != null)	
 			{
-				accessType = (string) refField.Attribute("AccessType");
+				accessType = (string) refField.Attribute("ReferenceType");
 								
 				// use int type if it's a reference field
 				return accessType == "Mandatory" ? "int" : "int?";
@@ -198,6 +215,15 @@ namespace EasyProjects.ClientModel.Entities
 		
 		bool nullable = (accessType != "Mandatory") && fieldName != primaryKeyField;
 		
+		if (entityField != null)
+		{
+			var predefinedManagedType = entityField.Attribute("ManagedType");
+			if (predefinedManagedType != null)
+			{
+				return (string)predefinedManagedType;
+			}
+		}
+
 		switch ((string) dataTypes.Cast<XAttribute>().FirstOrDefault() )
 		{
 			case "Integer":
@@ -214,6 +240,9 @@ namespace EasyProjects.ClientModel.Entities
 				return "string";
 			case "MultilineText":
 				return "string";				        
+			case "XML":
+			case "Raw":
+				return "string";
 			default:
 				return "object";
 		}		
@@ -237,6 +266,38 @@ namespace EasyProjects.ClientModel.Entities
 		{					
 			this.WriteLine(string.Format("[DisplayFormat(DataFormatString = \"{0}\")]", formatString));	 
 		}		
-	}	
+	}
 	
+	private void AddPermissionAttributes(XElement entityElement,XElement root)
+	{
+	   var hasVisibilityPermissionAttribute = entityElement.Attribute("HasVisibilityPermission");
+	   if(hasVisibilityPermissionAttribute != null)
+	   {
+	     string attribute = string.Format("[HasVisibilityPermission(Name=\"{0}\")]", hasVisibilityPermissionAttribute.Value);
+	     this.Write(attribute);
+		 this.Write(Environment.NewLine);
+
+	   }else
+	   {
+	     // check if this entity have root entity with permission
+		 var rootEntityNameAttribute  = entityElement.Attribute("RootEntityName");
+		 if(rootEntityNameAttribute != null && rootEntityNameAttribute.Value != "None")
+		 {
+			var entities =
+			from entityClass in root.Descendants("EntityClass")
+			let entityName = entityClass.Attribute("Name").Value
+			let visibilityPermission =  entityClass.Attribute("HasVisibilityPermission")!= null ?entityClass.Attribute("HasVisibilityPermission").Value : null
+			select new {Name = entityName, VisibilityPermissionName = visibilityPermission};
+
+		    var rootEntity = entities.First(p=>p.Name == rootEntityNameAttribute.Value);
+		
+		    if(rootEntity.VisibilityPermissionName != null)
+			{
+				string attribute = string.Format("[HasVisibilityPermission(Name=\"{0}\")]", rootEntity.VisibilityPermissionName);
+				this.Write(attribute);
+				this.Write(Environment.NewLine);
+			}
+		 }
+	   }	
+	}
 	#>
