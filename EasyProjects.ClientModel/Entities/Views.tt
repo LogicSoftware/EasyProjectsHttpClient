@@ -40,7 +40,8 @@ namespace EasyProjects.ClientModel.Entities
 		let entityName = GetEntityClass(entitiesRoot, (string) view.Attribute("RootEntityName"))
 		let entity = ((IEnumerable) entitiesRoot.XPathEvaluate(string.Format(@"//EntityClass[@Name='{0}']", entityName))).Cast<XElement>().FirstOrDefault()
 		// exclude empty views
-		where view.Descendants("Field").Any()
+		where view.Descendants("Field").Any() &&
+		viewName != "FormWithItemsCount"
         orderby viewName
         select new {Name = hasIdenticalEntity ? viewName + "View" : viewName, Class = view, entity = entity, entityName = entityName};
 			    
