@@ -2051,36 +2051,6 @@ namespace EasyProjects.ClientModel.Entities
     }
     
     /// <summary>
-    /// Generated class for view FormWithItemsCount
-    /// </summary>
-	[DebuggerDisplay("View.{ViewName}")]
-	public partial class FormWithItemsCount 
-    { 
-        public int Form_FormID {get; set;}
-        public LogicSoftware.EasyProjects.Model.Enums.FormStatus Form_Status {get; set;}
-        public string Form_Title {get; set;}
-        public string Form_Description {get; set;}
-        public DateTime? Form_DateCreated {get; set;}
-        public DateTime? Form_DateEdited {get; set;}
-        public int? ItemsCount {get; set;}
-        public string User_Name {get; set;}
-        public int User_UserID {get; set;}
-        public string EditedBy_Name {get; set;}
-
-		
-        public bool CanAddRecords  {get; set;}
-		
-        public bool CanViewRecords  {get; set;}
-		
-        public bool CanManageRecords  {get; set;}
-	
-	
-			public bool CanEdit  {get; set;}
-
-			public bool CanDelete  {get; set;}
-    }
-    
-    /// <summary>
     /// Generated class for view FreeUserList
     /// </summary>
 	[DebuggerDisplay("View.{ViewName}")]
