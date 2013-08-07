@@ -185,7 +185,7 @@ namespace EasyProjects.Client
                 return "calendar";
 
             if (entityType == typeof(Event))
-                return "events";
+                return "inner/events";
 
             if (entityType == typeof(Timeliness))
                 return "timeliness";
