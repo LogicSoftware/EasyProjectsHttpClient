@@ -98,14 +98,16 @@ namespace EasyProjects.Client.Test
                 var task2 = new Task
                 {
                     ProjectID = createdProject.ProjectID,
-                    Name = prefix + "_TaskByName2"
+                    Name = prefix + "_TaskByName2",
+                    TaskTypeID = 1
                 };
                 client.Post(task2);
 
                 var task1 = new Task
                 {
                     ProjectID = createdProject.ProjectID,
-                    Name = prefix + "_TaskByName1"
+                    Name = prefix + "_TaskByName1",
+                    TaskTypeID = 1
                 };
                 client.Post(task1);
 

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Entities\AccountInfo.cs" />
     <Compile Include="Entities\AuthenticateRequest.cs" />
+    <Compile Include="Entities\CustomField.cs" />
     <Compile Include="Entities\Enums.cs" />
     <Compile Include="Entities\Entities.cs">
       <AutoGen>True</AutoGen>

@@ -19,7 +19,7 @@ namespace EasyProjects.ClientModel.Entities
         /// </summary>
         /// <value>The field.</value>
         [DataMember]
-        public CustomField Field { get; set; }
+        public EasyProjects.ClientModel.Entities.CustomFields.CustomField Field { get; set; }
         
         object _value = null;
 
