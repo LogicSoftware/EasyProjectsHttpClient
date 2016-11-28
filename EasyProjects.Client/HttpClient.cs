@@ -196,6 +196,9 @@ namespace EasyProjects.Client
             if (entityType == typeof(Message))
                 return "messages";
 
+            if (entityType == typeof(Payment))
+                return "inner/payments";
+
             if (entityType == typeof(APIPortfolioList))
                 return "views/portfoliolist";
 
