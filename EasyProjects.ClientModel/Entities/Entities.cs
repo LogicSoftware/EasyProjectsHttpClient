@@ -744,6 +744,12 @@ namespace EasyProjects.ClientModel.Entities
         public decimal Amount { get; set; }
 		[DataMember]
         public string Description { get; set; }
+		[DataMember]
+        public bool? Billable { get; set; }
+		[DataMember]
+        public bool? Planned { get; set; }
+		[DataMember]
+        public bool? Billed { get; set; }
 		
 		[DataMember]
         public int ProjectID { get; set; }
