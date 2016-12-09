@@ -6,7 +6,7 @@
     <title>Easy Projects .NET HTTP Client</title>
     <authors>Pavel Pochobut</authors>
     <owners>Pavel Pochobut</owners>
-    <projectUrl>http://easyprojectsclient.codeplex.com/</projectUrl>
+    <projectUrl>https://github.com/LogicSoftware/EasyProjectsHttpClient/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>HTTP Client Sample for http://www.easyprojects.net/ RESTfull API</description>
     <summary>HTTP Client Sample for http://www.easyprojects.net/ RESTfull API</summary>
