@@ -36,6 +36,7 @@
       <MakeDir Directories="$(NugetDeploymentDirectory)\lib\net40" />
 
       <Copy SourceFiles="@(BinariesToDeploy)" DestinationFolder="$(NugetDeploymentDirectory)\lib\net40" />
+      <Copy SourceFiles="nuget\epnet-http-client.nuspec" DestinationFolder="$(NugetDeploymentDirectory)" />
     </Target>
 
 </Project>
