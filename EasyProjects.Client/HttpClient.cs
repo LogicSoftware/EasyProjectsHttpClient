@@ -142,9 +142,6 @@ namespace EasyProjects.Client
             if (entityType == typeof(TaskStatus))
                 return "taskstatuses";
 
-            if (entityType == typeof(IssueType))
-                return "issuetypes";
-
             if (entityType == typeof(Priority))
                 return "priority";
 

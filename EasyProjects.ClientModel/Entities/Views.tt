@@ -47,6 +47,9 @@ namespace EasyProjects.ClientModel.Entities
 			    
     foreach (var view in views)
     {
+		if(view.Class.Attribute("EnableAPI") == null || Convert.ToBoolean(view.Class.Attribute("EnableAPI").Value) == false)
+					continue;
+
 		var rootEntityPk = GetViewBaseID(view.entityName, view.entity, view.Class,entitiesRoot);
 
 #>

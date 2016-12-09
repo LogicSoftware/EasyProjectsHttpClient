@@ -18,6 +18,200 @@ namespace EasyProjects.ClientModel.Entities
 	using System.Xml.Serialization;
 
     /// <summary>
+    /// Generated class for entity ACProjectAggregatedValues
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class ACProjectAggregatedValues 
+
+    { 
+		public ACProjectAggregatedValues()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.ProjectID;} set { this.ProjectID = value; } }
+		[DataMember]
+        public int ProjectAggregatedValues_Project_ProjectID { get; set; }
+		[DataMember]
+        public decimal? ActualHours { get; set; }
+		[DataMember]
+        public decimal? Budget { get; set; }
+		[DataMember]
+        public decimal? EstimatedHours { get; set; }
+		[DataMember]
+        public decimal? ChildsBudget { get; set; }
+		[DataMember]
+        public decimal? ChildsEstimatedHours { get; set; }
+		[DataMember]
+        public decimal Cost { get; set; }
+		[DataMember]
+        public decimal InternalCost { get; set; }
+		[DataMember]
+        public decimal CostVariance { get; set; }
+		[DataMember]
+        public decimal BudgetedCost { get; set; }
+		[DataMember]
+        public decimal Profit { get; set; }
+		[DataMember]
+        public decimal PlannedExpenses { get; set; }
+		[DataMember]
+        public int ProfitHealth { get; set; }
+		[DataMember]
+        public decimal Profitability { get; set; }
+		
+		[DataMember]
+        public int ProjectID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity ACTaskAggregatedValues
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class ACTaskAggregatedValues 
+
+    { 
+		public ACTaskAggregatedValues()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.TaskID;} set { this.TaskID = value; } }
+		[DataMember]
+        public int TaskAggregatedValues_Task_TaskID { get; set; }
+		[DataMember]
+        public decimal? ActualHours { get; set; }
+		[DataMember]
+        public decimal? Budget { get; set; }
+		[DataMember]
+        public decimal? EstimatedHours { get; set; }
+		[DataMember]
+        public decimal? ChildsActualHours { get; set; }
+		[DataMember]
+        public decimal? ChildsBudget { get; set; }
+		[DataMember]
+        public decimal? ChildsEstimatedHours { get; set; }
+		[DataMember]
+        public decimal? OwnEstimatedHours { get; set; }
+		[DataMember]
+        public decimal? Cost { get; set; }
+		[DataMember]
+        public decimal? OwnCost { get; set; }
+		[DataMember]
+        public decimal? InternalCost { get; set; }
+		[DataMember]
+        public decimal? CostVariance { get; set; }
+		[DataMember]
+        public decimal? Profit { get; set; }
+		[DataMember]
+        public int? ProfitHealth { get; set; }
+		[DataMember]
+        public decimal? OwnEstimatedCost { get; set; }
+		[DataMember]
+        public decimal? EstimatedCost { get; set; }
+		
+		[DataMember]
+        public int TaskID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity ACTaskHealth
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class ACTaskHealth 
+
+    { 
+		public ACTaskHealth()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+		[DataMember]
+        public int TaskAggregatedValues_Task_TaskID { get; set; }
+		[DataMember]
+        public int? Health { get; set; }
+		
+		[DataMember]
+        public int TaskID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity Attachment
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class Attachment 
+
+    { 
+		public Attachment()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.AttachmentID;} set { this.AttachmentID = value; } }
+		[DataMember]
+        public int AttachmentID { get; set; }
+		[DataMember]
+        public string FileName { get; set; }
+		[DataMember]
+        public string RelativePath { get; set; }
+		[DataMember]
+        public string FileType { get; set; }
+		[DataMember]
+        public int FileLength { get; set; }
+		[DataMember]
+        public object FileContents { get; set; }
+		[DataMember]
+        public int Version { get; set; }
+		[DataMember]
+        public DateTime? CreationDate { get; set; }
+		[DataMember]
+        public bool CanHaveThumbnail { get; set; }
+		[DataMember]
+        public bool HasThumbnail { get; set; }
+		[DataMember]
+        public object ThumbnailContents { get; set; }
+		
+		[DataMember]
+        public int? MessageID { get; set; }
+		
+		[DataMember]
+        public int AttachmentSaveModeID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
     /// Generated class for entity CalendarEvent
     /// </summary>
 	[DataContract(Namespace="")]
@@ -26,6 +220,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public CalendarEvent()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -45,6 +240,12 @@ namespace EasyProjects.ClientModel.Entities
         public DateTime? EndDate { get; set; }
 		[DataMember]
         public string CalendarEventType { get; set; }
+		[DataMember]
+        public string VacationUserName { get; set; }
+		[DataMember]
+        public int? VacationUserID { get; set; }
+		[DataMember]
+        public bool? IsHalfDayVacation { get; set; }
 		
 		[DataMember]
         public int TaskStatusID { get; set; }
@@ -52,6 +253,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -64,6 +267,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Category()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -77,6 +281,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -143,6 +349,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public CustomField()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -155,6 +362,10 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public string DisplayName { get; set; }
 		[DataMember]
+        public string FieldDataTypeName { get; set; }
+		[DataMember]
+        public int FieldIndex { get; set; }
+		[DataMember]
         public bool IsRequired { get; set; }
 		[DataMember]
         public bool IsRestricted { get; set; }
@@ -162,6 +373,12 @@ namespace EasyProjects.ClientModel.Entities
         public int? Order { get; set; }
 		[DataMember]
         public string Description { get; set; }
+		[DataMember]
+        public bool? IsNumeric { get; set; }
+		[DataMember]
+        public bool? IsIdentity { get; set; }
+		[DataMember]
+        public int? CurrentIdentity { get; set; }
 		
 		[DataMember]
         public int EntityID { get; set; }
@@ -172,6 +389,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -184,6 +403,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public CustomFieldDataType()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -197,6 +417,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -209,6 +431,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public CustomFieldEntity()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -222,6 +445,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -234,6 +459,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public CustomFieldOrder()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -247,6 +473,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -259,6 +487,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public CustomFieldRestriction()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -276,6 +505,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -288,6 +519,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public CustomFieldValue()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -297,6 +529,8 @@ namespace EasyProjects.ClientModel.Entities
         public int FieldValueID { get; set; }
 		[DataMember]
         public string Value { get; set; }
+		[DataMember]
+        public int Order { get; set; }
 		
 		[DataMember]
         public int FieldID { get; set; }
@@ -304,6 +538,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -316,6 +552,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Event()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -338,6 +575,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -350,6 +589,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public EventAssignee()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -367,6 +607,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -379,6 +621,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public EventUser()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -393,6 +636,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -405,6 +650,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public FilterEntity()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -413,15 +659,11 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public int FilterID { get; set; }
 		[DataMember]
-        public int FilterTargetValue { get; set; }
-		[DataMember]
         public string Name { get; set; }
 		[DataMember]
         public string FilterXML { get; set; }
 		[DataMember]
         public bool? IsShared { get; set; }
-		[DataMember]
-        public bool? IsCurrent { get; set; }
 		
 		[DataMember]
         public int? UserID { get; set; }
@@ -429,31 +671,105 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
     /// <summary>
-    /// Generated class for entity IssueType
+    /// Generated class for entity FormAttachment
     /// </summary>
 	[DataContract(Namespace="")]
-	public partial class IssueType 
+	public partial class FormAttachment 
 
     { 
-		public IssueType()
+		public FormAttachment()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
         [DataMember(Name = "EntityBaseID")]
-		public int Id { get { return (int)this.IssueTypeID;} set { this.IssueTypeID = value; } }
+		public int Id { get { return (int)this.FormAttachmentID;} set { this.FormAttachmentID = value; } }
 		[DataMember]
-        public int IssueTypeID { get; set; }
+        public int FormAttachmentID { get; set; }
 		[DataMember]
-        public string Name { get; set; }
+        public int FormRecordID { get; set; }
+		[DataMember]
+        public string FileName { get; set; }
+		[DataMember]
+        public string RelativePath { get; set; }
+		[DataMember]
+        public string FileType { get; set; }
+		[DataMember]
+        public int FileLength { get; set; }
+		[DataMember]
+        public object FileContents { get; set; }
+		[DataMember]
+        public int? FormID { get; set; }
+		[DataMember]
+        public bool? CanHaveThumbnail { get; set; }
+		[DataMember]
+        public bool? HasThumbnail { get; set; }
+		[DataMember]
+        public object ThumbnailContents { get; set; }
+		
+		[DataMember]
+        public int AttachmentSaveModeID { get; set; }
 
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity IssueByEmailOptions
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class IssueByEmailOptions 
+
+    { 
+		public IssueByEmailOptions()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.OptionsID;} set { this.OptionsID = value; } }
+		[DataMember]
+        public int OptionsID { get; set; }
+		[DataMember]
+        public int AccountID { get; set; }
+		[DataMember]
+        public bool EnableIssueByMail { get; set; }
+		[DataMember]
+        public string Pop3Server { get; set; }
+		[DataMember]
+        public int Pop3Port { get; set; }
+		[DataMember]
+        public string Pop3UserName { get; set; }
+		[DataMember]
+        public string Pop3Password { get; set; }
+		[DataMember]
+        public bool DeleteLetters { get; set; }
+		[DataMember]
+        public bool Pop3EnableSSL { get; set; }
+		
+		[DataMember]
+        public int? ProjectID { get; set; }
+		
+		[DataMember]
+        public int? UserID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -466,6 +782,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public MemberPermission()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -476,33 +793,17 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public bool CanAccessAllTasks { get; set; }
 		[DataMember]
-        public bool CanAccessAllIssues { get; set; }
-		[DataMember]
-        public bool CanAccessAllRequests { get; set; }
-		[DataMember]
         public bool CanAccessAllTimeEntries { get; set; }
 		[DataMember]
         public bool CanEditProject { get; set; }
 		[DataMember]
         public bool CanEditAllTasks { get; set; }
 		[DataMember]
-        public bool CanEditAllIssues { get; set; }
-		[DataMember]
-        public bool CanEditAllRequests { get; set; }
-		[DataMember]
         public bool? CanEditAssignedTasks { get; set; }
-		[DataMember]
-        public bool? CanEditAssignedIssues { get; set; }
-		[DataMember]
-        public bool? CanEditAssignedRequests { get; set; }
 		[DataMember]
         public bool CanEditAllTimeEntries { get; set; }
 		[DataMember]
         public bool CanCreateTasks { get; set; }
-		[DataMember]
-        public bool CanCreateIssues { get; set; }
-		[DataMember]
-        public bool CanCreateRequests { get; set; }
 		[DataMember]
         public bool? CanCreateTimeEntries { get; set; }
 		[DataMember]
@@ -512,23 +813,9 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public bool CanDeleteAllTasks { get; set; }
 		[DataMember]
-        public bool CanDeleteAllIssues { get; set; }
-		[DataMember]
-        public bool CanDeleteAllRequests { get; set; }
-		[DataMember]
-        public bool? CanDeleteAssignedTasks { get; set; }
-		[DataMember]
-        public bool? CanDeleteAssignedIssues { get; set; }
-		[DataMember]
-        public bool? CanDeleteAssignedRequests { get; set; }
-		[DataMember]
         public bool CanDeleteAllTimeEntries { get; set; }
 		[DataMember]
         public bool? CanManageAssigneesTasks { get; set; }
-		[DataMember]
-        public bool? CanManageAssigneesIssues { get; set; }
-		[DataMember]
-        public bool? CanManageAssigneesRequests { get; set; }
 		[DataMember]
         public bool? CanViewMembersAndAssignees { get; set; }
 		[DataMember]
@@ -539,6 +826,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -551,6 +840,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Message()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -562,6 +852,12 @@ namespace EasyProjects.ClientModel.Entities
         public DateTime PostDate { get; set; }
 		[DataMember]
         public string MessageText { get; set; }
+		[DataMember]
+        public DateTime? EditedAt { get; set; }
+		[DataMember]
+        public string EditedByName { get; set; }
+		[DataMember]
+        public int? EditedByUserID { get; set; }
 		
 		[DataMember]
         public int? TaskID { get; set; }
@@ -570,7 +866,7 @@ namespace EasyProjects.ClientModel.Entities
         public int? ProjectID { get; set; }
 		
 		[DataMember]
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
 
 		#region Additional Permissions Fields		
 		
@@ -580,6 +876,51 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity MessageBoardOptions
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class MessageBoardOptions 
+
+    { 
+		public MessageBoardOptions()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.ID;} set { this.ID = value; } }
+		[DataMember]
+        public int ID { get; set; }
+		[DataMember]
+        public DateTime TimeVisit { get; set; }
+		[DataMember]
+        public bool EventsVisible { get; set; }
+		[DataMember]
+        public bool MessagesVisible { get; set; }
+		[DataMember]
+        public bool FilesVisible { get; set; }
+		
+		[DataMember]
+        public int UserID { get; set; }
+		
+		[DataMember]
+        public int? ProjectID { get; set; }
+		
+		[DataMember]
+        public int? TaskID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -592,6 +933,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Options()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -600,15 +942,11 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public int OptionsID { get; set; }
 		[DataMember]
-        public string ApplicationRoot { get; set; }
+        public int AccountID { get; set; }
 		[DataMember]
         public bool WeekendsAsWorkdays { get; set; }
 		[DataMember]
         public bool EnableNotifications { get; set; }
-		[DataMember]
-        public bool ShowStatusSymbols { get; set; }
-		[DataMember]
-        public bool ShowGraphPercentage { get; set; }
 		[DataMember]
         public string MailFromName { get; set; }
 		[DataMember]
@@ -628,6 +966,8 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public int Pop3Port { get; set; }
 		[DataMember]
+        public bool Pop3EnableSSL { get; set; }
+		[DataMember]
         public string Pop3UserName { get; set; }
 		[DataMember]
         public string Pop3Password { get; set; }
@@ -636,11 +976,7 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public bool EnableSSL { get; set; }
 		[DataMember]
-        public int CheckupInterval { get; set; }
-		[DataMember]
         public bool NotifyCreator { get; set; }
-		[DataMember]
-        public bool NotifyWhoMadeChange { get; set; }
 		[DataMember]
         public bool NotifyAssignees { get; set; }
 		[DataMember]
@@ -662,8 +998,6 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public bool ShowPortfolios { get; set; }
 		[DataMember]
-        public bool ShowLiveChat { get; set; }
-		[DataMember]
         public bool EnableApproveWorkflow { get; set; }
 		[DataMember]
         public bool CreatorAsApprover { get; set; }
@@ -677,8 +1011,6 @@ namespace EasyProjects.ClientModel.Entities
         public decimal CPIThreshold { get; set; }
 		[DataMember]
         public DateTime VacationYearStartDate { get; set; }
-		[DataMember]
-        public bool TrackHoursLeft { get; set; }
 		[DataMember]
         public bool CNRAvailable { get; set; }
 		[DataMember]
@@ -709,16 +1041,106 @@ namespace EasyProjects.ClientModel.Entities
         public bool EnablePasswordExpiration { get; set; }
 		[DataMember]
         public int PasswordExpiration { get; set; }
+		[DataMember]
+        public int ReportRowsLimit { get; set; }
+		[DataMember]
+        public DateTime? LastActivity { get; set; }
+		[DataMember]
+        public bool? SecondLoginFlag { get; set; }
+		[DataMember]
+        public object AvatarsVersion { get; set; }
+		[DataMember]
+        public bool CreatorHasFullAccessToProject { get; set; }
+		[DataMember]
+        public bool ForceHttps { get; set; }
+		[DataMember]
+        public int AttachmentsSpace { get; set; }
+		[DataMember]
+        public bool HasPaymentProblem { get; set; }
+		[DataMember]
+        public bool UseActualCompletionDateForDependencies { get; set; }
+		[DataMember]
+        public bool IsSuspended { get; set; }
+		[DataMember]
+        public bool ProjectMessagesAttachmentsVisibleForLA { get; set; }
+		[DataMember]
+        public decimal BreakevenRate { get; set; }
+		[DataMember]
+        public int WorkWeekStartsOn { get; set; }
+		[DataMember]
+        public decimal WorkOverWeekendRate { get; set; }
+		[DataMember]
+        public decimal WorkOverWeekendThreshold { get; set; }
+		[DataMember]
+        public decimal? MaxSickHoursPerYear { get; set; }
+		[DataMember]
+        public bool ShowWalkMe { get; set; }
+		[DataMember]
+        public bool CalculateHealthUseBothParams { get; set; }
+		[DataMember]
+        public bool HideUserLoginField { get; set; }
+		[DataMember]
+        public bool UseNewDetailsPage { get; set; }
+		[DataMember]
+        public bool IsUseNewDetailsPageOptionVisible { get; set; }
+		[DataMember]
+        public bool IsEnableApproveWorkflowOptionVisible { get; set; }
+		[DataMember]
+        public bool ApprovalWorkflow { get; set; }
+		[DataMember]
+        public bool IsSSOEnabled { get; set; }
+		[DataMember]
+        public int? SSORoleId { get; set; }
+		[DataMember]
+        public string SSODomainForEmails { get; set; }
+		[DataMember]
+        public int DefaultCurrencyId { get; set; }
+		[DataMember]
+        public bool IsBaselineEnabled { get; set; }
+		[DataMember]
+        public bool? EnableWebPushNotifications { get; set; }
 		
 		[DataMember]
         public int ProjectID { get; set; }
 		
 		[DataMember]
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
 
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity OvertimeThreshold
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class OvertimeThreshold 
+
+    { 
+		public OvertimeThreshold()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.OvertimeThresholdID;} set { this.OvertimeThresholdID = value; } }
+		[DataMember]
+        public int OvertimeThresholdID { get; set; }
+		[DataMember]
+        public decimal Threshold { get; set; }
+		[DataMember]
+        public decimal RateMultiplier { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -731,6 +1153,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Payment()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -757,6 +1180,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -841,6 +1266,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public PortfolioCategory()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -854,6 +1280,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -866,6 +1294,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public PortfolioMember()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -889,6 +1318,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -901,6 +1332,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public PortfolioStatus()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -918,6 +1350,42 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity PresetSettings
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class PresetSettings 
+
+    { 
+		public PresetSettings()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.PresetSettingsID;} set { this.PresetSettingsID = value; } }
+		[DataMember]
+        public int PresetSettingsID { get; set; }
+		[DataMember]
+        public bool IsVisible { get; set; }
+		
+		[DataMember]
+        public int? UserID { get; set; }
+		
+		[DataMember]
+        public int? PresetID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -930,6 +1398,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Priority()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -947,6 +1416,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -984,10 +1455,6 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public decimal? EstimatedHours { get; set; }
 		[DataMember]
-        public string Members { get; set; }
-		[DataMember]
-        public string Managers { get; set; }
-		[DataMember]
         public int BillingType { get; set; }
 		[DataMember]
         public decimal? BillingAmount { get; set; }
@@ -995,6 +1462,20 @@ namespace EasyProjects.ClientModel.Entities
         public decimal? Budget { get; set; }
 		[DataMember]
         public DateTime? LastModificationDate { get; set; }
+		[DataMember]
+        public bool? Billed { get; set; }
+		[DataMember]
+        public int? Duration { get; set; }
+		[DataMember]
+        public decimal? DurationHours { get; set; }
+		[DataMember]
+        public bool IsEndDateSelected { get; set; }
+		[DataMember]
+        public bool HasDescription { get; set; }
+		[DataMember]
+        public decimal StartDateLag { get; set; }
+		[DataMember]
+        public decimal EndDateLag { get; set; }
 		
 		[DataMember]
         public int ProjectStatusID { get; set; }
@@ -1010,26 +1491,14 @@ namespace EasyProjects.ClientModel.Entities
 		
 		[DataMember]
         public int? PortfolioID { get; set; }
+		
+		[DataMember]
+        public int CurrencyID { get; set; }
 
 		#region Additional Permissions Fields		
 		
 		[DataMember]
-        public bool CanManageProjectMembersCalculated  {get; set;}
-		
-		[DataMember]
         public bool CanCreateTasks  {get; set;}
-		
-		[DataMember]
-        public bool CanCreateIssues  {get; set;}
-		
-		[DataMember]
-        public bool CanCreateRequests  {get; set;}
-		
-		[DataMember]
-        public bool IsProjectMember  {get; set;}
-		
-		[DataMember]
-        public bool CanManage  {get; set;}
 		
 		[DataMember]
         public bool CanViewMembersAndAssignees  {get; set;}
@@ -1041,31 +1510,16 @@ namespace EasyProjects.ClientModel.Entities
         public bool CanManageAssigneesTasks  {get; set;}
 		
 		[DataMember]
-        public bool CanManageAssigneesIssues  {get; set;}
-		
-		[DataMember]
-        public bool CanManageAssigneesRequests  {get; set;}
-		
-		[DataMember]
         public bool CanEditAllTasks  {get; set;}
-		
-		[DataMember]
-        public bool CanEditAllIssues  {get; set;}
-		
-		[DataMember]
-        public bool CanEditAllRequests  {get; set;}
 		
 		[DataMember]
         public bool CanEditAssignedTasks  {get; set;}
 		
 		[DataMember]
-        public bool CanEditAssignedIssues  {get; set;}
+        public bool CanDeleteAllTimeEntries  {get; set;}
 		
 		[DataMember]
-        public bool CanEditAssignedRequests  {get; set;}
-		
-		[DataMember]
-        public bool IsPortfolioManager  {get; set;}
+        public bool CanDeleteAllTasks  {get; set;}
 		#endregion		
 	
 	
@@ -1091,6 +1545,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public ProjectAggregatedValues()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1108,6 +1563,10 @@ namespace EasyProjects.ClientModel.Entities
         public decimal? ChildsBudget { get; set; }
 		[DataMember]
         public decimal? ChildsEstimatedHours { get; set; }
+		[DataMember]
+        public decimal? ChildsHoursLeft { get; set; }
+		[DataMember]
+        public decimal? InternalCost { get; set; }
 		
 		[DataMember]
         public int? ProjectID { get; set; }
@@ -1115,50 +1574,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
-
-    }
-    
-    /// <summary>
-    /// Generated class for entity ProjectAttachment
-    /// </summary>
-	[DataContract(Namespace="")]
-	public partial class ProjectAttachment 
-
-    { 
-		public ProjectAttachment()
-		{
-		}
-
-
-        [DataMember(Name = "EntityBaseID")]
-		public int Id { get { return (int)this.ProjectAttachmentID;} set { this.ProjectAttachmentID = value; } }
 		[DataMember]
-        public int ProjectAttachmentID { get; set; }
-		[DataMember]
-        public string FileName { get; set; }
-		[DataMember]
-        public string FileType { get; set; }
-		[DataMember]
-        public int FileLength { get; set; }
-		[DataMember]
-        public object FileContents { get; set; }
-		[DataMember]
-        public string Description { get; set; }
-		[DataMember]
-        public DateTime UploadDate { get; set; }
-		
-		[DataMember]
-        public int ProjectID { get; set; }
-		
-		[DataMember]
-        public int UserID { get; set; }
-		
-		[DataMember]
-        public int AttachmentSaveModeID { get; set; }
-
-	
-	
-
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1171,6 +1588,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public ProjectAutoAssign()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1197,6 +1615,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1209,6 +1629,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public ProjectCost()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1230,6 +1651,105 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity ProjectCurrency
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class ProjectCurrency 
+
+    { 
+		public ProjectCurrency()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.CurrencyID;} set { this.CurrencyID = value; } }
+		[DataMember]
+        public int CurrencyID { get; set; }
+		[DataMember]
+        public string CurrencyName { get; set; }
+		[DataMember]
+        public string CurrencySymbol { get; set; }
+		[DataMember]
+        public string CurrencyText { get; set; }
+		[DataMember]
+        public int SortLevel { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity ProjectFinancials
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class ProjectFinancials 
+
+    { 
+		public ProjectFinancials()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.ProjectID;} set { this.ProjectID = value; } }
+		[DataMember]
+        public decimal Project_Cost { get; set; }
+		[DataMember]
+        public decimal Project_InternalCost { get; set; }
+		[DataMember]
+        public decimal Project_ProjectProfit { get; set; }
+		[DataMember]
+        public int Project_ProjectProfitHealth { get; set; }
+		[DataMember]
+        public decimal Project_ProjectProfitability { get; set; }
+		[DataMember]
+        public decimal Project_ProjectCostVariance { get; set; }
+		[DataMember]
+        public decimal Project_BudgetedCost { get; set; }
+		[DataMember]
+        public decimal Project_PlannedExpenses { get; set; }
+		[DataMember]
+        public decimal Project_TotalPayments { get; set; }
+		[DataMember]
+        public decimal Project_ProjectExpectedRevenue { get; set; }
+		[DataMember]
+        public decimal Project_PercentageOfProjectBilled { get; set; }
+		[DataMember]
+        public decimal Project_WorkInProgress { get; set; }
+		[DataMember]
+        public decimal Project_TotalBilled { get; set; }
+		[DataMember]
+        public decimal Project_ProjectTimeUsage { get; set; }
+		[DataMember]
+        public decimal Project_BillingUtilization { get; set; }
+		[DataMember]
+        public decimal Project_InternalEstimatedCost { get; set; }
+		[DataMember]
+        public decimal Project_EstimatedBudgetProfitability { get; set; }
+		[DataMember]
+        public decimal Project_ActualBudgetProfitability { get; set; }
+		
+		[DataMember]
+        public int ProjectID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1242,6 +1762,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public ProjectMember()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1265,6 +1786,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1277,6 +1800,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public ProjectStatus()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1296,10 +1820,16 @@ namespace EasyProjects.ClientModel.Entities
         public bool? IsIconEmpty { get; set; }
 		[DataMember]
         public string IconHash { get; set; }
+		[DataMember]
+        public bool IsTemplateStatus { get; set; }
+		[DataMember]
+        public bool IsDraftStatus { get; set; }
 
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1312,6 +1842,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public PublicHoliday()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1327,6 +1858,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1382,13 +1915,48 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public bool CanManageForms { get; set; }
 		[DataMember]
+        public bool CanInviteUsers { get; set; }
+		[DataMember]
         public int? InternalRoleID { get; set; }
+		[DataMember]
+        public bool CanPurchase { get; set; }
 		
 		[DataMember]
         public int MemberPermissionID { get; set; }
 		
 		[DataMember]
         public int? DefaultMemberPermissionID { get; set; }
+		
+		[DataMember]
+        public int? PresetID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity Skill
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class Skill 
+
+    { 
+		public Skill()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.SkillID;} set { this.SkillID = value; } }
+		[DataMember]
+        public int SkillID { get; set; }
+		[DataMember]
+        public string Name { get; set; }
 
 	
 	
@@ -1418,8 +1986,6 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public string Name { get; set; }
 		[DataMember]
-        public string NameStyle { get; set; }
-		[DataMember]
         public string Description { get; set; }
 		[DataMember]
         public int? ParentID { get; set; }
@@ -1436,6 +2002,12 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public int? Duration { get; set; }
 		[DataMember]
+        public decimal? DurationHours { get; set; }
+		[DataMember]
+        public decimal StartDateLag { get; set; }
+		[DataMember]
+        public decimal EndDateLag { get; set; }
+		[DataMember]
         public bool? IsEndDateSelected { get; set; }
 		[DataMember]
         public decimal? EstimatedHours { get; set; }
@@ -1444,9 +2016,7 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public decimal? HoursLeft { get; set; }
 		[DataMember]
-        public DateTime? FixedDate { get; set; }
-		[DataMember]
-        public int? BillingType { get; set; }
+        public int BillingType { get; set; }
 		[DataMember]
         public decimal? BillingAmount { get; set; }
 		[DataMember]
@@ -1463,6 +2033,16 @@ namespace EasyProjects.ClientModel.Entities
         public int WBSNumber { get; set; }
 		[DataMember]
         public bool? Approved { get; set; }
+		[DataMember]
+        public bool? Billed { get; set; }
+		[DataMember]
+        public bool HasDescription { get; set; }
+		[DataMember]
+        public DateTime? StartDateForGantt { get; set; }
+		[DataMember]
+        public DateTime? EndDateForGantt { get; set; }
+		[DataMember]
+        public decimal? LagForGantt { get; set; }
 		
 		[DataMember]
         public int ProjectID { get; set; }
@@ -1480,27 +2060,12 @@ namespace EasyProjects.ClientModel.Entities
         public int PriorityID { get; set; }
 		
 		[DataMember]
-        public int CreatorID { get; set; }
-		
-		[DataMember]
-        public int? IssueTypeID { get; set; }
+        public int? CreatorID { get; set; }
 
 		#region Additional Permissions Fields		
 		
 		[DataMember]
         public bool CanCreateTasks  {get; set;}
-		
-		[DataMember]
-        public bool CanCreateIssues  {get; set;}
-		
-		[DataMember]
-        public bool CanCreateRequests  {get; set;}
-		
-		[DataMember]
-        public bool IsProjectMember  {get; set;}
-		
-		[DataMember]
-        public bool CanManage  {get; set;}
 		
 		[DataMember]
         public bool CanCreateTimeEntries  {get; set;}
@@ -1512,34 +2077,22 @@ namespace EasyProjects.ClientModel.Entities
         public bool CanManageAssigneesTasks  {get; set;}
 		
 		[DataMember]
-        public bool CanManageAssigneesIssues  {get; set;}
-		
-		[DataMember]
-        public bool CanManageAssigneesRequests  {get; set;}
-		
-		[DataMember]
         public bool CanViewMembersAndAssignees  {get; set;}
 		
 		[DataMember]
         public bool CanEditAllTasks  {get; set;}
 		
 		[DataMember]
-        public bool CanEditAllIssues  {get; set;}
-		
-		[DataMember]
-        public bool CanEditAllRequests  {get; set;}
-		
-		[DataMember]
         public bool CanEditAssignedTasks  {get; set;}
 		
 		[DataMember]
-        public bool CanEditAssignedIssues  {get; set;}
+        public bool IsProjectMember  {get; set;}
 		
 		[DataMember]
-        public bool CanEditAssignedRequests  {get; set;}
+        public bool CanManageProjectMembers  {get; set;}
 		
 		[DataMember]
-        public bool IsPortfolioManager  {get; set;}
+        public bool CanAccessAllTimeEntries  {get; set;}
 		#endregion		
 	
 	
@@ -1565,6 +2118,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public TaskAggregatedValues()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1585,7 +2139,13 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public decimal? ChildsEstimatedHours { get; set; }
 		[DataMember]
+        public decimal? ChildsHoursLeft { get; set; }
+		[DataMember]
         public decimal? OwnEstimatedHours { get; set; }
+		[DataMember]
+        public decimal? Cost { get; set; }
+		[DataMember]
+        public decimal? InternalCost { get; set; }
 		
 		[DataMember]
         public int? TaskID { get; set; }
@@ -1593,6 +2153,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1605,6 +2167,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public TaskAssignee()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1613,56 +2176,17 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public int TaskAssigneeID { get; set; }
 		[DataMember]
-        public bool? WorkIsDone { get; set; }
+        public bool WorkIsDone { get; set; }
+		[DataMember]
+        public decimal PersonalHoursLeft { get; set; }
+		[DataMember]
+        public decimal PersonalEstimatedHours { get; set; }
 		
 		[DataMember]
         public int TaskID { get; set; }
 		
 		[DataMember]
         public int ProjectMemberID { get; set; }
-
-	
-	
-
-
-    }
-    
-    /// <summary>
-    /// Generated class for entity TaskAttachment
-    /// </summary>
-	[DataContract(Namespace="")]
-	public partial class TaskAttachment 
-
-    { 
-		public TaskAttachment()
-		{
-		}
-
-
-        [DataMember(Name = "EntityBaseID")]
-		public int Id { get { return (int)this.TaskAttachmentID;} set { this.TaskAttachmentID = value; } }
-		[DataMember]
-        public int TaskAttachmentID { get; set; }
-		[DataMember]
-        public string FileName { get; set; }
-		[DataMember]
-        public string FileType { get; set; }
-		[DataMember]
-        public int FileLength { get; set; }
-		[DataMember]
-        public object FileContents { get; set; }
-		[DataMember]
-        public string Description { get; set; }
-		[DataMember]
-        public DateTime UploadDate { get; set; }
-		[DataMember]
-        public int? ProjectID { get; set; }
-		
-		[DataMember]
-        public int AttachmentSaveModeID { get; set; }
-		
-		[DataMember]
-        public int TaskID { get; set; }
 		
 		[DataMember]
         public int UserID { get; set; }
@@ -1670,6 +2194,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1710,6 +2236,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public TaskCost()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1719,12 +2246,12 @@ namespace EasyProjects.ClientModel.Entities
         public int TaskID { get; set; }
 		[DataMember]
         public decimal Task_Cost { get; set; }
+
+	
+	
+
 		[DataMember]
-        public bool Task_ExceedByCost { get; set; }
-
-	
-	
-
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1742,13 +2269,13 @@ namespace EasyProjects.ClientModel.Entities
 
 
         [DataMember(Name = "EntityBaseID")]
-		public int Id { get { return (int)this.PKID;} set { this.PKID = value; } }
+		public int Id { get { return (int)this.TaskID;} set { this.TaskID = value; } }
 		[DataMember]
-        public int PKID { get; set; }
+        public int TaskCriticalPath_Task_TaskID { get; set; }
 		[DataMember]
-        public int? ProjectID { get; set; }
+        public int ProjectID { get; set; }
 		[DataMember]
-        public bool? IsCriticalPath { get; set; }
+        public bool IsCriticalPath { get; set; }
 		
 		[DataMember]
         public int TaskID { get; set; }
@@ -1770,6 +2297,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public TaskDependency()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1786,11 +2314,13 @@ namespace EasyProjects.ClientModel.Entities
         public int DependentTaskID { get; set; }
 		
 		[DataMember]
-        public int? MasterTaskID { get; set; }
+        public int MasterTaskID { get; set; }
 
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1803,6 +2333,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public TaskHoursLeft()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1816,6 +2347,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1828,6 +2361,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public TaskStatus()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1858,6 +2392,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1870,6 +2406,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public TaskType()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1883,33 +2420,36 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
     /// <summary>
-    /// Generated class for entity TaskWBS
+    /// Generated class for entity Team
     /// </summary>
 	[DataContract(Namespace="")]
-	public partial class TaskWBS 
+	public partial class Team 
 
     { 
-		public TaskWBS()
+		public Team()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
         [DataMember(Name = "EntityBaseID")]
-		public int Id { get { return (int)this.TaskID;} set { this.TaskID = value; } }
+		public int Id { get { return (int)this.TeamID;} set { this.TeamID = value; } }
 		[DataMember]
-        public int TaskID { get; set; }
+        public int TeamID { get; set; }
 		[DataMember]
-        public int WBSNumber { get; set; }
-		[DataMember]
-        public DateTime LastModificationDate { get; set; }
+        public string Name { get; set; }
 
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1922,6 +2462,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Threshold()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1939,6 +2480,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1951,6 +2494,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public TimeEntry()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -1968,6 +2512,18 @@ namespace EasyProjects.ClientModel.Entities
         public decimal Duration { get; set; }
 		[DataMember]
         public DateTime? LastModificationDate { get; set; }
+		[DataMember]
+        public bool? Billed { get; set; }
+		[DataMember]
+        public bool? Approved { get; set; }
+		[DataMember]
+        public string Locked { get; set; }
+		[DataMember]
+        public decimal? Rate { get; set; }
+		[DataMember]
+        public decimal? InternalRate { get; set; }
+		[DataMember]
+        public decimal? Cost { get; set; }
 		
 		[DataMember]
         public int TaskID { get; set; }
@@ -1975,6 +2531,11 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public int UserID { get; set; }
 
+		#region Additional Permissions Fields		
+		
+		[DataMember]
+        public bool CanApprove  {get; set;}
+		#endregion		
 	
 	
 		#region Permissions Fields		
@@ -1985,6 +2546,8 @@ namespace EasyProjects.ClientModel.Entities
 		public bool CanDelete  {get; set;}
 		#endregion
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -1997,6 +2560,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Timeliness()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -2014,6 +2578,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -2047,6 +2613,8 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public decimal HourlyRate { get; set; }
 		[DataMember]
+        public decimal HourlyRateInternal { get; set; }
+		[DataMember]
         public bool ShowCompletedTasks { get; set; }
 		[DataMember]
         public bool ShowCompletedProjects { get; set; }
@@ -2061,8 +2629,6 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public string DefaultPage { get; set; }
 		[DataMember]
-        public string OpenId { get; set; }
-		[DataMember]
         public DateTime? LastActivityDate { get; set; }
 		[DataMember]
         public DateTime? PasswordModifyDate { get; set; }
@@ -2070,12 +2636,50 @@ namespace EasyProjects.ClientModel.Entities
         public int? InvalidPasswordAttemptsCount { get; set; }
 		[DataMember]
         public DateTime? LastLockoutDate { get; set; }
+		[DataMember]
+        public int? PresetID { get; set; }
+		[DataMember]
+        public int? TimeZoneOffset { get; set; }
+		[DataMember]
+        public DateTime CreationDate { get; set; }
 		
 		[DataMember]
         public int? CustomerID { get; set; }
 		
 		[DataMember]
         public int RoleID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity UserSkill
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class UserSkill 
+
+    { 
+		public UserSkill()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.UserSkillID;} set { this.UserSkillID = value; } }
+		[DataMember]
+        public int UserSkillID { get; set; }
+		
+		[DataMember]
+        public int UserID { get; set; }
+		
+		[DataMember]
+        public int SkillID { get; set; }
 
 	
 	
@@ -2094,6 +2698,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public UserTeam()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -2111,6 +2716,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -2123,6 +2730,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public Vacation()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -2132,6 +2740,8 @@ namespace EasyProjects.ClientModel.Entities
         public int VacationID { get; set; }
 		[DataMember]
         public DateTime Date { get; set; }
+		[DataMember]
+        public bool IsHalfDay { get; set; }
 		
 		[DataMember]
         public int? VacationTypeID { get; set; }
@@ -2142,6 +2752,8 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -2154,6 +2766,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public VacationType()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -2165,10 +2778,18 @@ namespace EasyProjects.ClientModel.Entities
         public string Name { get; set; }
 		[DataMember]
         public string Color { get; set; }
+		[DataMember]
+        public string ShortName { get; set; }
+		[DataMember]
+        public bool IsPaid { get; set; }
+		[DataMember]
+        public bool IncludeInOvertime { get; set; }
 
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
@@ -2181,6 +2802,7 @@ namespace EasyProjects.ClientModel.Entities
     { 
 		public WorkflowEvent()
 		{
+            this.CustomFields = new CustomFieldsCollection();
 		}
 
 
@@ -2191,7 +2813,11 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public int WorkflowEventType { get; set; }
 		[DataMember]
+        public string WorkflowEventText { get; set; }
+		[DataMember]
         public DateTime EventDate { get; set; }
+		[DataMember]
+        public DateTime? CreatedAt { get; set; }
 		
 		[DataMember]
         public int? TaskID { get; set; }
@@ -2200,7 +2826,7 @@ namespace EasyProjects.ClientModel.Entities
         public int? ProjectID { get; set; }
 		
 		[DataMember]
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
 		
 		[DataMember]
         public int? AssigneeUserID { get; set; }
@@ -2208,6 +2834,47 @@ namespace EasyProjects.ClientModel.Entities
 	
 	
 
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
+
+    }
+    
+    /// <summary>
+    /// Generated class for entity WorkflowEventChanges
+    /// </summary>
+	[DataContract(Namespace="")]
+	public partial class WorkflowEventChanges 
+
+    { 
+		public WorkflowEventChanges()
+		{
+            this.CustomFields = new CustomFieldsCollection();
+		}
+
+
+        [DataMember(Name = "EntityBaseID")]
+		public int Id { get { return (int)this.WorkflowEventChangesID;} set { this.WorkflowEventChangesID = value; } }
+		[DataMember]
+        public int WorkflowEventChangesID { get; set; }
+		[DataMember]
+        public string PropertyName { get; set; }
+		[DataMember]
+        public string OldValue { get; set; }
+		[DataMember]
+        public string NewValue { get; set; }
+		[DataMember]
+        public bool? IsCustomField { get; set; }
+		[DataMember]
+        public int? FieldDataType { get; set; }
+		
+		[DataMember]
+        public int? WorkflowEventID { get; set; }
+
+	
+	
+
+		[DataMember]
+        public CustomFieldsCollection CustomFields { get; set; }
 
     }
     
