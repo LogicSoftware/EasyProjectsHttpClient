@@ -140,7 +140,7 @@ namespace EasyProjects.ClientModel.Entities
 	public partial class APITaskFlatList 
     { 
         public int Task_TaskID {get; set;}
-        public int Task_WBSNumber {get; set;}
+        public long Task_WBSNumber {get; set;}
         public string Task_Name {get; set;}
         public int Task_ProjectID {get; set;}
         public string Project_Name {get; set;}
@@ -308,7 +308,7 @@ namespace EasyProjects.ClientModel.Entities
         public bool TaskStatus_TreatAsCompleted {get; set;}
         public decimal? UserActualHours {get; set;}
         public bool? HasChildren {get; set;}
-        public int Task_WBSNumber {get; set;}
+        public long Task_WBSNumber {get; set;}
 
 		
         public bool CanCreateTasks  {get; set;}

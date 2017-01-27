@@ -246,9 +246,6 @@ namespace EasyProjects.ClientModel.Entities
         public int? VacationUserID { get; set; }
 		[DataMember]
         public bool? IsHalfDayVacation { get; set; }
-		
-		[DataMember]
-        public int TaskStatusID { get; set; }
 
 	
 	
@@ -2030,7 +2027,7 @@ namespace EasyProjects.ClientModel.Entities
 		[DataMember]
         public DateTime? LastModificationDate { get; set; }
 		[DataMember]
-        public int WBSNumber { get; set; }
+        public long WBSNumber { get; set; }
 		[DataMember]
         public bool? Approved { get; set; }
 		[DataMember]
