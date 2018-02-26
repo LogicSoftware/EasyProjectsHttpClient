@@ -2521,6 +2521,8 @@ namespace EasyProjects.ClientModel.Entities
         public decimal? InternalRate { get; set; }
 		[DataMember]
         public decimal? Cost { get; set; }
+		[DataMember]
+        public DateTime CreationDate { get; set; }
 		
 		[DataMember]
         public int TaskID { get; set; }
